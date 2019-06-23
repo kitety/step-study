@@ -87,7 +87,7 @@ let async = function (callback) {
     console.log(e);
   }
 };
-// 回调地域
+// 回调地狱
 let fs = require("fs");
 fs.readFile("template.txt", "utf8", function (err, template) {
   fs.readFile("data.txt", "utf8", function (err, data) {
@@ -230,4 +230,3 @@ function read () {
     return template + "" + data;
   })
 }
-
