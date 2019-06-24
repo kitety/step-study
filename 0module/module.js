@@ -20,7 +20,7 @@ let fs = reuqire('fs')
 let path = reuqire('path')
 let b = req('./module.js')
 
-function req(mod) {
+function req (mod) {
   let filename = path.join(__dirname, mod);
   let content = fs.readFileSync(filename, 'utf8');
   let fn = new Function('exports', 'require', 'module', '__filename', '__dirname', content + '\n return module.exports;');
@@ -56,12 +56,12 @@ require(['b'], function (b) {
 // 原理
 let factories = {}
 
-function define(moduleName, dependences, factory) {
+function define (moduleName, dependences, factory) {
   factory.dependences = dependences;
   factories[moduleName] = factory
 }
 
-function require(modNames, callback) {
+function require (modNames, callback) {
   let loadedModNames = modNames.map(function (modName) {
     let factory = factories[modName];
     let dependences = factory.dependences;
@@ -77,47 +77,48 @@ function require(modNames, callback) {
 /* 4.ES6模块化 */
 /* ES6 模块化是ECMA提出的JavaScript模块化规范，它在语言的层面上实现了模块化。浏览器厂商和Node.js 都宣布要原生支持该规范。它将逐渐取代CommonJS和AMD`规范，成为浏览器和服务器通用的模块解决方案 */
 //导入
-import {name} from './person.js';
+import { name } from './person.js';
 //导出
 export const name = 'hello'
 
-/*二、自动化构建*/
-/*1.代码转换：es6转换为es6,less编译为css等
-* 2.文件优化：压缩js css html,压缩合并图片
-* 3.代码分割：提取公共代码，提取首屏不需要的代码让其异步加载
-* 4.代码合并：采用模块化的项目里面将包含多个模块和文件，需要构建功能将模块分类合成一个文件
-* 5.自动刷新：监听本地的源代码，自动构建刷新浏览器
-* 6.代码校验：在代码被提交到仓库前校验代码是否符合规范，以及单元测试是否通过
-* 7.自动发布：更新之后，自动构建出线上发布代码并且传输给刚发布系统*/
+  /*二、自动化构建*/
+  /*1.代码转换：es6转换为es6,less编译为css等
+  * 2.文件优化：压缩js css html,压缩合并图片
+  * 3.代码分割：提取公共代码，提取首屏不需要的代码让其异步加载
+  * 4.代码合并：采用模块化的项目里面将包含多个模块和文件，需要构建功能将模块分类合成一个文件
+  * 5.自动刷新：监听本地的源代码，自动构建刷新浏览器
+  * 6.代码校验：在代码被提交到仓库前校验代码是否符合规范，以及单元测试是否通过
+  * 7.自动发布：更新之后，自动构建出线上发布代码并且传输给刚发布系统*/
 
-/*三、Webpack*/
-//各种资源的打包工具
-//  1.require
-(
-  function (modules) {
-    function require(moduleId) {
-      var moudule = {
-        exports: {}
+  /*三、Webpack*/
+  //各种资源的打包工具
+  //  1.require
+  (
+    function (modules) {
+      function require (moduleId) {
+        var moudule = {
+          exports: {}
+        }
+        modules[moduleId].call(module.exports, module, module.exports, require)
       }
-      modules[moduleId].call(module.exports, module, module.exports, require)
-    }
 
-    return require('./index.js')
-  }
-)
-({
-  './index.js': (function (module, exportsm, require) {
-    eval("console.log('hello');\n\n");
+      return require('./index.js')
+    }
+  )
+  ({
+    './index.js': (function (module, exportsm, require) {
+      eval("console.log('hello');\n\n");
+    })
   })
-})
 
 // 2. 配置
-#! /usr/bin/env node
+// #! /usr/bin/env node
 const pathLib = require('path')
 const fs = require('fs')
 const ejs = require('ejs')
 const cwd = process.cwd()
-let {entry, output: {filename, path}} = require(pathLib.join(cwd, './webpack.config.js'))
+//返回当前node.js进程的当前工作目录
+let { entry, output: { filename, path } } = require(pathLib.join(cwd, './webpack.config.js'))
 let script = fs.readFileSync(entry, 'utf8')
 let bundle = `
 (function (modules) {
@@ -137,17 +138,64 @@ let bundle = `
   })
 })
 `
-let bundlejs=ejs.render(bundle,{
-  entry,script
+let bundlejs = ejs.render(bundle, {
+  entry, script
 })
 try {
-  fs.readFileSync(pathLib.join(path,filename),bundlejs)
-}catch (e) {
+  fs.readFileSync(pathLib.join(path, filename), bundlejs)
+} catch (e) {
   console.log(e)
 }
 console.log('compile successful')
 //3.依赖其他模块
-
+// #! /usr/bin/env node
+const pathLib = require('path')
+const fs = require('fs')
+const ejs = require('ejs')
+let { entry, output: { filename, path } } = require(pathLib.join(cwd, './webpack.config.js'))
+let script = fs.readFileSync(entry, 'utf8');
+let modules = [];
+script.replace(/require\(['"](.+?)['"]\)/g, function () {
+  let name = arguments[1];
+  let script = fs.readFileSync(name, 'utf8');
+  modules.push({ name, script })
+})
+let bundle = `
+(function (modules) {
+    function require(moduleId) {
+      var module = {
+        exports: {}
+      }
+      modules[moduleId].call(module.exports, module, module.exports, require);
+      return modules.exports
+    }
+    return require("<%-entry%>")
+  }
+)
+({
+  "<%-entry%>":
+      (function (module, exports, require) {
+          eval(\\\`<%-script%>\\\`);
+      })
+  <%if(modules.length>0){%>,<%}%>
+  <%for(let i=0;i<modules.length;i++){
+      let module = modules[i];%>
+      "<%-module.name%>":
+      (function (module, exports, require) {
+          eval(\\\`<%-module.script%>\\\`);
+      })
+  <% }%>
+});
+`
+let bundlejs = ejs.render(bundle, {
+  entry, script, modules
+})
+try {
+  fs.readFileSync(pathLib.join(path, filename), bundlejs)
+} catch (e) {
+  console.error('编译失败', e)
+}
+console.log('编译成功')
 
 
 
