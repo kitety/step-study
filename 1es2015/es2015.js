@@ -83,14 +83,17 @@ let { name: myname, age: myage } = obj
 // 5.默认值
 let [a = "a", b = "b", c = new Error('C必须指定')] = [1, , 3];
 console.log(a, b, c);
+
 function ajax (options) {
   var method = options.method || "get";
   var data = options.data || {};
   //.....
 }
+
 function ajax ({ method = "get", data }) {
   console.log(arguments);
 }
+
 ajax({
   method: "post",
   data: { "name": "hello" }
@@ -104,17 +107,21 @@ let desc = `${name} is ${age} old`
 let str = `
 <div>hello</div>
 `
+
 function replace (desc) {
   return desc.replace(/\$\{([^}]+)\}/g, function (matched, key) {
     return eval(key)
   })
 }
+
 // 2.带标签的模板字符串
 // 可以再模板字符串的前面增加一个标签，这个标签可以处理模板字符串，标签其实就是一个函数，函数可以接两个参数，一个参数是string，就是字符串模板里面每个部分的字符，还有一个参数可以用rest的形式values，这个参数里面就是模板字符串里面的值
 var name = 'kitety', age = 24
+
 function desc (strings, ...values) {
   console.log(strings, values);
 }
+
 desc`${name} is ${age} old`
 // (3) ["", " is ", " old", raw: Array(3)] (2) ["kitety", 24]
 // 3.字符串新方法
@@ -131,3 +138,41 @@ str.endWith('lo', 3)
 // 4.repeat 返回一个新的字符串，表示原来的字符串重复n次
 'x'.repeat(3);
 'x'.repeat(0);
+
+/* 五、函数 */
+
+//1.默认参数
+function ajax (url, method = 'GET', dataType = 'json') {
+  console.log(url)
+  console.log(method)
+  console.log(dataType)
+}
+
+// 2.展开操作符
+// 把...放在数组前面可以把一个数组进行展开，可以把一个数组传入函数而不用使用call
+// 传入数组
+let print = function (a, b, c) {
+  console.log(a, b, c);
+}
+print([1, 2, 3])
+print(...[1, 2, 3])
+// 可以代替apply
+var m1 = Math.max.apply(null, [1, 2, 3, 4])
+var m2 = Math.max(...[1, 2, 3, 4])
+//可以代替concat
+var arr1 = [1, 3]
+var arr2 = [3, 5]
+var arr3 = arr1.concat(arr2)
+var arr4 = [...arr1, ...arr2]
+console.log(arr4)
+//类数组转换为数组
+function max (a, b, c) {
+  return Math.max(...arguments)
+}
+max(1, 2, 3)
+// 3.剩余操作符
+// 可以将剩余的参数都放到一个数组里面
+let rest = function (a, ...rest) {
+  console.log(a, rest);
+}
+rest(1, 2, 3)
