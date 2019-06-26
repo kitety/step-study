@@ -39,7 +39,7 @@ for (let i = 0; i < 2; i++) {
   let i = 100;
 }
 //闭包的新写法
-; (function () {
+;(function () {
 })()
 //现在
 {
@@ -72,31 +72,31 @@ let [x, [y], z] = [1, [2], 3]
 console.log(x, y, z);
 let [x1, [y1, z1]] = [1, [2.1, 2.2]];
 console.log(x1, y1, z1);
-let [json, arr, num] = [{ name: 'zfpx' }, [1, 2], 3];
+let [json, arr, num] = [{name: 'zfpx'}, [1, 2], 3];
 console.log(json, arr, num);
 // 3.省略赋值
 let [, , a] = [1, 2, 3]
 // 4.解构对象
-var obj = { name: 'kitety', age: 8 }
-let { name, age } = obj
-let { name: myname, age: myage } = obj
+var obj = {name: 'kitety', age: 8}
+let {name, age} = obj
+let {name: myname, age: myage} = obj
 // 5.默认值
 let [a = "a", b = "b", c = new Error('C必须指定')] = [1, , 3];
 console.log(a, b, c);
 
-function ajax (options) {
+function ajax(options) {
   var method = options.method || "get";
   var data = options.data || {};
   //.....
 }
 
-function ajax ({ method = "get", data }) {
+function ajax({method = "get", data}) {
   console.log(arguments);
 }
 
 ajax({
   method: "post",
-  data: { "name": "hello" }
+  data: {"name": "hello"}
 });
 
 /* 四、字符串 */
@@ -108,7 +108,7 @@ let str = `
 <div>hello</div>
 `
 
-function replace (desc) {
+function replace(desc) {
   return desc.replace(/\$\{([^}]+)\}/g, function (matched, key) {
     return eval(key)
   })
@@ -118,7 +118,7 @@ function replace (desc) {
 // 可以再模板字符串的前面增加一个标签，这个标签可以处理模板字符串，标签其实就是一个函数，函数可以接两个参数，一个参数是string，就是字符串模板里面每个部分的字符，还有一个参数可以用rest的形式values，这个参数里面就是模板字符串里面的值
 var name = 'kitety', age = 24
 
-function desc (strings, ...values) {
+function desc(strings, ...values) {
   console.log(strings, values);
 }
 
@@ -142,7 +142,7 @@ str.endWith('lo', 3)
 /* 五、函数 */
 
 //1.默认参数
-function ajax (url, method = 'GET', dataType = 'json') {
+function ajax(url, method = 'GET', dataType = 'json') {
   console.log(url)
   console.log(method)
   console.log(dataType)
@@ -165,10 +165,12 @@ var arr2 = [3, 5]
 var arr3 = arr1.concat(arr2)
 var arr4 = [...arr1, ...arr2]
 console.log(arr4)
+
 //类数组转换为数组
-function max (a, b, c) {
+function max(a, b, c) {
   return Math.max(...arguments)
 }
+
 max(1, 2, 3)
 // 3.剩余操作符
 // 可以将剩余的参数都放到一个数组里面
@@ -176,3 +178,164 @@ let rest = function (a, ...rest) {
   console.log(a, rest);
 }
 rest(1, 2, 3)
+//4.解构参数
+let destruct = function ({name, age}) {
+  console.log(name, age)
+}
+destruct({name: 'kitety', age: 12})
+// 5.函数的名字 es6为函数添加了一个name属性
+var desc = function descname() {
+}
+console.log(desc.name)
+// 6.箭头函数
+//用=>来连接参数和函数体，直接返回可以用()
+// 输入参数多余一个要用()包裹，函数体多条语句用{}包裹
+  [1, 2, 3].forEach(val => console.log(val))
+//箭头函数根本没有自己的this，内部的this就是外层代码块的this。正因为没有this，从而避免了this的指向问题
+var person = {
+  name: 'kitety',
+  getName: function () {
+    // setTimeout(function () {
+    // this指向window
+    //   console.log(this)
+    // })
+    setTimeout(() => {
+      //this指向person
+      console.log(this)
+    })
+  }
+}
+// 7.数组的新方法
+//7.1 from:将一个数组或者类数组变成数组，会复制一份
+let newArr = Array.from(oldArr)
+//7.2 Array.of:为了将一组数值，转换为数组
+console.log(Array(3), Array(3).length);
+console.log(Array.of(3), Array.of(3).length);
+//7.3 copyWithin
+//Array.prototype.copyWithin(target,start=0,end=this.length)方法浅复制数组的一部分到同一数组中的另一个位置，并返回它，不会改变原数组的长度。
+[1, 2, 3, 4, 5].copyWithin(0, 1, 2)
+//7.4find 找到对应的元素和索引
+let arr = [1, 2, 3, 4, 5];
+let find = arr.find((item, index, arr) => {
+  return item === 3
+})
+let findIndex = arr.findIndex((item, index, arr) => {
+  return item === 3
+})
+console.log(find, findIndex)
+//7.5 fill 填充数组
+let arr = [1, 2, 3, 4, 5, 6];
+arr.fill('a', 1, 2);
+console.log(arr)
+//map reduce filter forEach
+
+/*六、对象*/
+//1.对象字面量
+//对象的键值同名
+{
+  let name = 'kitety';
+  let age = 8;
+  let getName = function () {
+    console.log(this.name)
+  }
+  let person = {
+    name, age, getName
+  }
+}
+//2.Object.is()比较两个值是否相等
+console.log(Object.is(NaN, NaN))
+//Object.assign()
+//把多个对下个属性复制到一层对象中，第一个参数是复制的对象，从第二个参数开始往后，都是复制的源对象
+{
+  var nameObj = {name: 'kitety'}
+  var ageObj = {age: 8};
+  var obj = {};
+  Object.assign(obj, nameObj, ageObj);
+  console.log(obj);
+
+//克隆对象
+  function clone(obj) {
+    return Object.assign({}, obj);
+  }
+}
+//4.Object.setPrototypeOf 将一个指定的对象的原型设置为一个对象非或者null
+{
+  var obj1 = {name: 'kitety'}
+  var obj2 = {name: 'hello'}
+  var obj = {};
+  Object.setPrototypeOf(obj, obj1)
+  console.log(obj.name)
+  console.log(Object.getPrototypeOf(obj))
+}
+//5.proto 直接在对象表达式中设置prototype
+{
+  var obj1 = -{name: 'kitety'};
+  var obj3 = {
+    __proto__: obj1
+  }
+  console.log(obj3.name)
+  console.log(Object.getPrototypeOf(obj3))
+}
+//6.super可以调用prototype上的属性和方法
+{
+  let person = {
+    eat() {
+      return 'milk'
+    }
+  }
+  let student = {
+    __proto__: person,
+    eat() {
+      return super.eat() + 'bread'
+    }
+  }
+  console.log(student.eat())
+}
+
+/*七、类*/
+//1.class 使用class关键字定义一个类，基于这个类创建的实例以后会自动执行constructor方法，此方法可以用来初始化
+{
+  class Person {
+    constructor(name) {
+      this.name = name
+    }
+
+    getName() {
+      return this.name
+    }
+  }
+
+  let p = new Person('kitety')
+  p.getName()
+}
+//2.get和set
+//getter可以用来获取属性，setter可以用来设置属性
+{
+  class Person {
+    constructor() {
+      this.hobbies = []
+    }
+    set hobby(hobby){
+      this.hobbies.push(hobby)
+    }
+    get hobby(){
+      return this.hobbies
+    }
+  }
+  let p=new Person();
+  p.hobby='pingpang'
+  p.hobby='pingpang2'
+  console.log(p.hobby)
+}
+//3.静态方法 static，不需要实例化就可以使用的方法
+{
+  class Person{
+    static add(a,b){
+      return a+b
+    }
+  }
+}
+//4.extends 继承
+{
+
+}
