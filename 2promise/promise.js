@@ -80,7 +80,7 @@ class Promise {
   }
 }
 
-//3.promise作为函数的返回值
+/* 五、promise作为函数的返回值 */
 function ajaxPromise(queryUrl) {
   return new Promise((resolve, reject) => {
     let xhr = new XMLHttpRequest();
@@ -104,3 +104,105 @@ ajaxPromise('https://www.baidu.com')
   .catch((err) => {
     console.error(err);
   });
+
+/* 六、promise的链式调用 */
+// 每次调用返回的都是一个新的Promise实例，链式调用的参数通过返回值传递
+// then可以使用链式调用的写法在于，每一次执行该方法返回一个Promise对象
+{
+  readFile('./promise.js').then(data => {
+    console.log(data);
+    return data;
+  }).then(data => {
+    console.log(data);
+    return data;
+  }).then(data => {
+    console.log(data);
+    return data;
+  })
+}
+
+/* 七、、Promise Api */
+/**
+ * 1.Promise.all
+ * @params promise实例的数组
+ * @return 一个promise实例，状态取决于数组的状态，数组中的实例全部resolve，此时才为resolve，否则为reject
+ */
+{
+  Promise.all([p1, p2]).then(res => console.log(res)).catch(e => console.error(e))
+  // 不管两个promise谁先完成，Promise.all方法会按照数组里面的顺序将结果返回
+}
+
+/**
+ * 2.Promise.race
+ * @params promise实例的数组
+ * @return 一个promise实例，状态取决于第一个请求成功的状态，第一个请求resolve，此时才为resolve，否则为reject
+ */
+{
+  Promise.all([p1, p2]).then(res => console.log(res)).catch(e => console.error(e))
+  // 不管两个promise谁先完成，Promise.all方法会按照数组里面的顺序将结果返回
+}
+
+/**
+ * 3.Promise.resolve
+ * @params 
+ * 传入不同参数头不同的功能
+ * 值(对象，数组，字符串)：作为resolve传递出去的值
+ * promise实例：原封不动返回
+ * @return 返回一个promise实例，这个实例处于resolve状态
+ */
+
+/**
+ * 4.Promise.reject
+ * @params 抛出的错误信息
+ * @return 返回一个promise实例，这个实例处于reject状态
+ */
+
+/* 八、q */
+// q是一个在js中实现promise的模块
+
+// 1.q的使用方法
+{
+  var Q = require('q')
+  var fs = require('fs')
+  function read(filename) {
+    var deferred = Q.defer();
+    fs.readFile(filename, 'utf8', (err, data) => {
+      if (err) {
+        deffered.reject(err)
+      } else {
+        deffered.resolve(data)
+      }
+    })
+    return deffered.promise
+  }
+  read('./promise.js').then(data => {
+    console.log(data)
+  }, err => {
+    console.log(err)
+  })
+}
+
+// 2.q的简单实现
+{
+  module.export = {
+    defer() {
+      var _success, _error;
+      return {
+        resolve(data) {
+          _success(data)
+        },
+        reject(data) {
+          _error(data)
+        },
+        promise: {
+          then(success, error) {
+            _success = success;
+            _error = error;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* 3.q的实现 */
