@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      .square {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+      }
+      .square1 {
+        background: red;
+      }
+      .square2 {
+        background: green;
+      }
+      .square3 {
+        background: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="square square1" style="margin-left: 0"></div>
+    <div class="square square2" style="margin-left: 0"></div>
+    <div class="square square3" style="margin-left: 0"></div>
+  </body>
+  <script>
+    var square1 = document.querySelector(".square1");
+    var square2 = document.querySelector(".square2");
+    var square3 = document.querySelector(".square3");
+    function move(element, target, resolve) {
+      let timer = setInterval(function() {
+        var marginLeft = parseInt(element.style.marginLeft, 10);
+        if (marginLeft == target) {
+          resolve();
+        } else {
+          element.style.marginLeft = ++marginLeft + "px";
+        }
+      }, 13);
+    }
+    // function move(ele, target, resolve) {
+    //   let current = 0;
+    //   let timer = setInterval(function() {
+    //     ele.style.transform = `translateX(${++current}px)`;
+    //     if (current > target) {
+    //       clearInterval(timer);
+    //       resolve();
+    //     }
+    //     // 60hz 16.7ms paint 再测试 13/14ms
+    //     // 13ms 大概是一个在各浏览器上使动画表现接近一致的值，改成 14ms 估计也没什么关系
+    //     // https://www.zhihu.com/question/19824093/answer/13081490
+    //   }, 13);
+    // }
+    function animate(ele, target) {
+      return new Promise((resolve, reject) => {
+        move(ele, target, resolve);
+      });
+    }
+    animate(square1, 100)
+      .then(function() {
+        return animate(square2, 100);
+      })
+      .then(function() {
+        return animate(square3, 100);
+      });
+  </script>
+</html>

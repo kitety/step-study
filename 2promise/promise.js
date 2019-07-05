@@ -35,7 +35,7 @@
 
 //2.使用es5模拟Promise
 {
-  function Promise(fn) {
+  function Promise (fn) {
     fn(data => {
       this.resolve(data)
     }, err => {
@@ -65,15 +65,15 @@ class Promise {
     })
   }
 
-  resolve(data) {
+  resolve (data) {
     this.resolve(data)
   }
 
-  reject(data) {
+  reject (data) {
     this.reject(data)
   }
 
-  then(success, error) {
+  then (success, error) {
     this.resolve = success;
     this.reject = error;
     console.log(this);
@@ -81,7 +81,7 @@ class Promise {
 }
 
 /* 五、promise作为函数的返回值 */
-function ajaxPromise(queryUrl) {
+function ajaxPromise (queryUrl) {
   return new Promise((resolve, reject) => {
     let xhr = new XMLHttpRequest();
     xhr.open('GET', queryUrl, true);
@@ -164,7 +164,7 @@ ajaxPromise('https://www.baidu.com')
 {
   var Q = require('q')
   var fs = require('fs')
-  function read(filename) {
+  function read (filename) {
     var deferred = Q.defer();
     fs.readFile(filename, 'utf8', (err, data) => {
       if (err) {
@@ -185,17 +185,17 @@ ajaxPromise('https://www.baidu.com')
 // 2.q的简单实现
 {
   module.export = {
-    defer() {
+    defer () {
       var _success, _error;
       return {
-        resolve(data) {
+        resolve (data) {
           _success(data)
         },
-        reject(data) {
+        reject (data) {
           _error(data)
         },
         promise: {
-          then(success, error) {
+          then (success, error) {
             _success = success;
             _error = error;
           }
@@ -233,3 +233,56 @@ ajaxPromise('https://www.baidu.com')
     }
   }
 }
+
+/* 九.bluebird */
+// https://www.ibm.com/developerworks/cn/web/wa-lo-use-bluebird-implements-power-promise/index.html
+// 实现promise标准的库功能最全，速度最快的一个库
+
+// 1.bluebird经典使用
+{
+  let Promise = require('./bluebird')
+  // Promise.promisify转换为带有then格式的
+  let readFile = Promise.promisify(require('fs').readFile)
+  readFile('./promise.js').then((result) => {
+    console.log(result)
+  }).catch((err) => {
+    console.log(err);
+  });
+  let fs = Promise.promisfiyAll(require('fs'));
+  fs.readFileAsync('./promise.js', 'utf8').then((result) => {
+    console.log(result)
+  }).catch((err) => {
+    console.log(err);
+  });
+}
+
+// 2.bluebird的简单实现
+{
+  module.exports = {
+    promiseify (fn) {
+      return function () {
+        let args = Array.from(arguments);
+        return new Promise((resolve, reject) => {
+          fn.apply(null, args.concat(err => {
+            if (err) {
+              reject(err)
+            } else {
+              resolve(err)
+            }
+          }))
+        })
+
+      }
+    },
+    promiseifyAll (obj) {
+      for (const attr in obj) {
+        if (obj.hasOwnProperty(attr) && typeof obj[attr] === 'function') {
+          obj[attr + 'Async'] = this.promiseify(obj[attr])
+        }
+      }
+      return obj
+    }
+  }
+}
+
+/* 十、co */
