@@ -206,3 +206,30 @@ ajaxPromise('https://www.baidu.com')
 }
 
 /* 3.q的实现 */
+// https://div.io/topic/1351
+{
+  var defer = function () {
+    var pending = [], value;
+    return {
+      resolve: function (_value) {
+        if (pending) {
+          value = _value;
+          for (let ii = 0; ii < pending.length; ii++) {
+            const callback = pending[ii];
+            callback(value)
+          }
+          pending = undefiend
+        }
+      },
+      promise: {
+        then: function (callback) {
+          if (pending) {
+            pending.push(callback)
+          } else {
+            callback(value)
+          }
+        }
+      }
+    }
+  }
+}
