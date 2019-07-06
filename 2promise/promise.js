@@ -286,3 +286,262 @@ ajaxPromise('https://www.baidu.com')
 }
 
 /* 十、co */
+{
+  let fs = require('fs');
+  function getNumber () {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        let number = Math.random()
+        if (number > 0.5) {
+          resolve(number)
+        } else {
+          reject('数字太小')
+        }
+      }, 1e3);
+    })
+  }
+  function* read () {
+    let a = yield getNumber();
+    console.log(a);
+    let b = yield 'b';
+    console.log(b);
+    let c = yield getNumber();
+    console.log(c);
+  }
+  function co (gen) {
+    return new Promise((resolve, reject) => {
+      // 生成器返回迭代器
+      let g = gen();
+      function next (lastValue) {
+        let { done, value } = g.next(lastValue);
+        if (done) {
+          resolve(lastValue)
+        } else {
+          if (value instanceof Promise) {
+            value.then(next, val => {
+              reject(val)
+            })
+          } else {
+            next(value)
+          }
+        }
+      }
+      next()
+    })
+  }
+  co(read).then((result) => {
+    console.log(result)
+  }, err => {
+    console.error(err)
+  });
+}
+
+// 2.co连续读文件
+{
+  let fs = require('fs');
+  function readFile (filename) {
+    return new Promise((resolve, reject) => {
+      fs.readFile(filename, 'utf8', (err, data) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(data)
+        }
+      })
+    })
+  }
+  function* read () {
+    let a = yield readFile('./promise.js');
+    console.log(a);
+    let b = yield readFile('./promise.js');
+    console.log(b);
+  }
+  function co (gen) {
+    let g = gen();
+    function next (val) {
+      let { done, value } = g.next(val);
+      if (!done) {
+        value.then(next)
+      }
+    }
+    next()
+  }
+}
+
+/* 十二、Promise/A+完整实现 */
+{
+  function Promise (execuctor) {
+    let self = this;
+    self.status = 'pending';
+    self.value = undefined;
+    self.onResolveCallbacks = [];
+    self.onRejectCallbacks = [];
+    function resolve (value) {
+      if (value instanceof Promise) {
+        return value.then(resolve, reject)
+      }
+      // 异步执行回调
+      setTimeout(() => {
+        if (self.status === 'pending') {
+          self.value = value;
+          self.status = 'resolved';
+          self.onResolveCallbacks.forEach(item => item(value))
+        }
+      }, 0);
+    }
+    function reject (value) {
+      // 这里不加判断 进入catch处理
+      setTimeout(() => {
+        if (self.status === 'pending') {
+          self.value = value;
+          self.status = 'rejcet';
+          self.onRejectCallbacks.forEach(item => item(value))
+        }
+      }, 0);
+    }
+    try {
+      execuctor(resolve, reject)
+    } catch (e) {
+      reject(e)
+    }
+  }
+  /**
+   * 
+   * @param {*} promise2 promise实例
+   * @param {*} x 成功或失败回调的返回值
+   * @param {*} resolve 成功回调
+   * @param {*} reject 失败回调
+   */
+  function resolvePromise (promise2, x, resolve, reject) {
+    if (promise2 === x) {
+      return reject(new TypeError('循环引用'))
+    }
+    let then, called;
+    if (x != null && (typeof x !== 'object' || typeof x !== 'function')) {
+      try {
+        then = x.then;
+        if (typeof then === 'function') {
+          then.call(x, y => {
+            if (called) return;
+            called = true
+            resolvePromise(promise2, y, resolve, reject)
+          }, r => {
+            if (called) return;
+            called = true
+            reject(r)
+          })
+        } else {
+          resolve(x)
+        }
+      } catch (e) {
+        if (called) return;
+        called = true;
+        reject(e)
+      }
+    } else {
+      resolve(x)
+    }
+  }
+  Promise.prototype.then = function (onFullfilled, onRejected) {
+    let self = this;
+    // 判断是不是函数，不然的话直接返回value
+    onFullfilled = typeof onFullfilled === 'function' ? onFullfilled : function (value) {
+      return value
+    }
+    onRejected = typeof onRejected === 'function' ? onRejected : function (value) {
+      return value
+    }
+    let promise2;
+    if (self.status === 'resolved') {
+      promise2 = new Promise(function (resolve, reject) {
+        setTimeout(() => {
+          try {
+            let x = onFullfilled(self.value);
+            resolvePromise(promise2, x, resolve, reject);
+          } catch (e) {
+            reject(e)
+          }
+        }, 0);
+      })
+    }
+    if (self.status === 'reject') {
+      promise2 = new Promise(function (resolve, reject) {
+        setTimeout(() => {
+          try {
+            let x = onRejected(self.value);
+            resolvePromise(promise2, x, resolve, reject);
+          } catch (e) {
+            reject(e)
+          }
+        }, 0);
+      })
+    }
+    if (self.status === 'pending') {
+      promise2 = new Promise((resolve, reject) => {
+        self.onResolveCallbacks.push(function (value) {
+          try {
+            let x = onFullfilled(self.value);
+            resolvePromise(promise2, x, resolve, reject);
+          } catch (e) {
+            reject(e)
+          }
+        })
+        self.onRejectCallbacks.push(function (value) {
+          try {
+            let x = onRejected(self.value);
+            resolvePromise(promise2, x, resolve, reject);
+          } catch (e) {
+            reject(e)
+          }
+        })
+      })
+    }
+    return promise2
+  }
+  Promise.prototype.catch = function (onRejected) {
+    return this.then(null, onRejected)
+  }
+  Promise.all = function (promises) {
+    return new Promise((resolve, reject) => {
+      let result = [];
+      let count = 0;
+      for (let i = 0; i < promises.length; i++) {
+        promises[i].then(function (data) {
+          result[i] = data;
+          if (++count == promises.length) {
+            resolve(result)
+          }
+        }, function (err) {
+          reject(err)
+        })
+      }
+    })
+  }
+  Promise.race = function (promises) {
+    return new Promise((resolve, reject) => {
+      for (let i = 0; i < promises.length; i++) {
+        promises[i].then(function (data) {
+          resolve(data)
+        }, function (err) {
+          reject(err)
+        })
+      }
+    })
+  }
+  Promise.deferred = Promise.defer = function () {
+    var defer = {};
+    defer.promise = new Promise((resolve, reject) => {
+      defer.resolve = resolve
+      defer.reject = reject
+    })
+    return defer;
+  }
+  /**
+ * npm i -g promises-aplus-tests
+ * promises-aplus-tests Promise.js
+ */
+  try {
+    module.exports = Promise
+  } catch (e) {
+  }
+}
