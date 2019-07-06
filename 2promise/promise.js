@@ -519,6 +519,7 @@ ajaxPromise('https://www.baidu.com')
   }
   Promise.race = function (promises) {
     return new Promise((resolve, reject) => {
+      // done 变量控制了对 resolve reject 方法只执行一次的处理
       for (let i = 0; i < promises.length; i++) {
         promises[i].then(function (data) {
           resolve(data)
