@@ -64,3 +64,69 @@ js没有模块系统，不支持封闭的作用域和依赖管理
  * module.children
  * module.paths
  */
+
+ /* 7.包 */
+ /**
+  * 在nodejs中，通过包来对一组具有相互依赖的模块来统一管理，通过包可以将某个独立的功能封装起来
+  * 每个项目的根目录下，一般有package.json文件，定义了这个项目的所需要的各个模块和配置信息（名称 版本 许可证等元数据）。npm install命令就是根据这个配置文件，自动下在所需要的模块，也就是配置项目所需的运行和开发环境
+  */
+/**
+ * name            项目名称
+ * version         版本号
+ * description     项目描述
+ * keywords：{Array} 关键词
+ * homepage         url主页
+ * bugs             项目问题反馈的url/email
+ * license          项目许可证
+ * author,contributors          作者和贡献者
+ * main             主文件
+ * bin              项目用到的可执行文件
+ * repository       项目代码存放地方
+ * scripts          声明一系列npm脚本指令
+ * dependencies     项目在生产环境中依赖的包
+ * devDependencies   项目在开发环境中依赖的包
+ * peerDependencies  应用运行依赖的宿主包
+ */
+
+ /* 8.NPM */
+/**
+ * 8.1安装
+ * 8.1.1 局部安装
+ * npm install <package-name>
+ * npm install <package name>@<version spec> // 指定版本
+ * 8.1.2全局安装
+ * npm install <package-name> -g
+ * 
+ * 8.2 卸载
+ * npm uninstall <package name>
+ * 
+ * 8.3 更新
+ * npm update <package name>
+ * 8.4 npx
+ * npm 从5.2版开始，增加了 npx 命令
+ * 8.4.1 解决的问题就是调用项目内部安装的模块，在node_modules中执行命令
+ * 8.4.2 避免全局安装模块
+ * npx create-react-app my-react-app
+ */
+
+ /* 9.yarn */
+ /**
+  * 9.1 初始化
+  * yarn init
+  * 
+  * 9.2添加依赖包
+  * yarn add [package]
+  * yarn add [package]@[version]
+  * yarn add [package]@[tag]
+  * 
+  * 9.3更新依赖包
+  * yarn upgrade [package]
+  * yarn upgrade [package]@[version]
+  * yarn upgrade [package]@[tag]
+  * 
+  * 9.4删除一个依赖包
+  * yarn remove [package]
+  * 
+  * 9.5安装所有依赖包
+  * yarn或yarn install
+  */
