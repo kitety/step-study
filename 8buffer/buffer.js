@@ -29,7 +29,8 @@ console.log((33).toString(2))
 const buf1 = Buffer.alloc(10)
 // 长度为10，用1填充
 const buf2 = Buffer.alloc(10, 10)
-console.log(buf2);
+// 打印是0a 十六进制，但是在vsc debug的时候是10 十进制
+// console.log(buf2);
 // 长度为10，未初始化
 const buf3 = Buffer.allocUnsafe(10)
 
