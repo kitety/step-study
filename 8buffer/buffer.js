@@ -28,7 +28,8 @@ console.log((33).toString(2))
 // 长度为10，用0填充
 const buf1 = Buffer.alloc(10)
 // 长度为10，用1填充
-const buf2 = Buffer.alloc(10, 1)
+const buf2 = Buffer.alloc(10, 10)
+console.log(buf2);
 // 长度为10，未初始化
 const buf3 = Buffer.allocUnsafe(10)
 
@@ -125,18 +126,35 @@ console.log(subBuffer.toString())
 }
 
 // 5.9 isBuffer 如果 obj 是一个 Buffer，则返回 true，否则返回 false。
-let testObj={};
+let testObj = {};
 console.log(Buffer.isBuffer(testObj))
 
 // 5.10 length 获取字节长度
 {
-    let str='好好学习'
-    let buffer=Buffer.from(str);
+    let str = '好好学习'
+    let buffer = Buffer.from(str);
     // 一个汉字三个字节
-    console.log(str.length,buffer.length)
+    console.log(str.length, buffer.length)
 }
 
 /* 6.base64 */
 /**
  * base64是网络上常见的传输8bit字节码的编码方式之一
+ * base64就是一种基于64个可打印字符来表示二进制数据的方法
+ * base64要求把每三个8bit的字节转换为四个6bit的字节（3*8=4*6=24），然后再把6bit添加两位高位0，组成8bit的字节
  */
+{
+    const charts = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+
+    function transfer(str) {
+        let buf = Buffer.from(str);
+        let result = '';
+        for(let b of buf){
+            //转换为二进制
+            result+=b.toString(2);
+        }
+        return result.match(/(\d{6})/g).map(val=>parseInt(val,2)).map(val=>charts[val]).join('')
+    }
+    let r=transfer('好好学习');
+    console.log(r)
+}
