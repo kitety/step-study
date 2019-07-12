@@ -283,7 +283,7 @@ let path = require('path');
     D   E   F
  */
 
-//  8.1同步善妒优先+先序遍历算法
+//  8.1同步深度优先+先序遍历算法
 {
   function deepSync(dir) {
     console.log(dir);
@@ -297,5 +297,73 @@ let path = require('path');
       }
     });
   }
-  deepSync(path.join(__dirname,'3'))
+  // deepSync(path.join(__dirname, '/3'))
+}
+
+// 8.2 异步深度优先+先序遍历
+{
+  function deep(dir, callback) {
+    console.log(dir);
+    fs.readdir(dir, (err, files) => {
+      !function next(index) {
+        if (index == files.length) return callback();
+        let child = path.join(dir, files[index]);
+        fs.stat(child, (err, stat) => {
+          if (stat.isDirectory()) {
+            deep(child, () => next(index + 1))
+          } else {
+            console.log(child);
+            next(index + 1)
+          }
+        })
+      }(0)
+    })
+  }
+  // deep(path.join(__dirname, '/3'), () => {
+  //   console.log('查询完成')
+  // })
+}
+
+// 8.3 同步广度优先+先序遍历
+{
+  function wideSync(dir) {
+    let dirs = [dir];
+    while (dirs.length > 0) {
+      // 广度 先入先出
+      let current = dirs.shift();
+      console.log(current);
+      let stat = fs.statSync(current);
+      if (stat.isDirectory()) {
+        let files = fs.readdirSync(current);
+        files.forEach(item => dirs.push(path.join(current, item)))
+      }
+    }
+  }
+  // wideSync(path.join(__dirname, '/3'), () => {
+  //   console.log('查询完成')
+  // })
+}
+// 8.4 异步广度优先+先序遍历
+{
+  function wide(dir, cb) {
+    console.log(dir)
+    cb && cb();
+    fs.readdir(dir, (err, files) => {
+      !function next(i) {
+        if (i >= files.length) return
+        let child = path.join(dir, files[i]);
+        fs.stat(child, (err, stat) => {
+          if (stat.isDirectory()) {
+            wide(child, () => next(i + 1))
+          } else {
+            console.log(child)
+            next(i + 1)
+          }
+        })
+      }(0)
+    })
+  }
+  // wide(path.join(__dirname, '/3'), () => {
+  //   console.log('查询完成')
+  // })
 }
