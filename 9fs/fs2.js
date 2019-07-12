@@ -3,7 +3,7 @@
 let fs = require('fs');
 let path = require('path');
 {
-  function makeSync (dir) {
+  function makeSync(dir) {
     // path.sep提供平台特定的路径片段分隔符：
     let parts = dir.split(path.sep)
     for (let i = 1; i < parts.length; i++) {
@@ -19,11 +19,11 @@ let path = require('path');
 }
 // 6.2 异步创建目录
 {
-  function maked (dir, callback) {
+  function maked(dir, callback) {
     // path.sep提供平台特定的路径片段分隔符：
     let parts = dir.split(path.sep)
     let i = 1;
-    function next () {
+    function next() {
       if (i > parts.length) {
         return callback && callback();
       }
@@ -44,7 +44,7 @@ let path = require('path');
 // 6.3 Async+Await创建目录
 {
   // await 命令后面的 Promise 对象
-  async function mkdir (parent) {
+  async function mkdir(parent) {
     return new Promise((resolve, reject) => {
       fs.mkdir(parent, err => {
         if (err) {
@@ -55,7 +55,7 @@ let path = require('path');
       })
     })
   }
-  async function access (parent) {
+  async function access(parent) {
     return new Promise((resolve, reject) => {
       fs.access(parent, err => {
         if (err) {
@@ -66,7 +66,7 @@ let path = require('path');
       })
     })
   }
-  async function makePromise (dir, callback) {
+  async function makePromise(dir, callback) {
     let parts = dir.split(path.sep);
     for (let i = 1; i < parts.length; i++) {
       let parent = parts.slice(0, i).join(path.sep);
@@ -89,7 +89,7 @@ let path = require('path');
 // fs.readdirSync 同步地读取目录的内容
 // fs.rmdirSync 同步地删除一个空目录
 {
-  function rmSync (dir) {
+  function rmSync(dir) {
     try {
       let stat = fs.statSync(dir);
       if (stat.isFile()) {
@@ -109,7 +109,7 @@ let path = require('path');
 
 // 7.2 异步删除非空目录（Promise版）
 {
-  function rmPromise (dir) {
+  function rmPromise(dir) {
     return new Promise((resolve, reject) => {
       fs.stat(dir, (err, stat) => {
         if (err) return reject(err)
@@ -134,14 +134,14 @@ let path = require('path');
 
 // 7.3 异步串行删除目录(深度优先)
 {
-  function rmAsyncSeries (dir, callback) {
+  function rmAsyncSeries(dir, callback) {
     setTimeout(() => {
       fs.stat(dir, (err, stat) => {
         if (err) return callback(err)
         if (stat.isDirectory()) {
           fs.readdir(dir, (err, files) => {
             let paths = files.map(file => path.join(dir, file))
-            function next (index) {
+            function next(index) {
               if (index >= files.length) return fs.rmdir(dir, callback)
               let current = paths[index];
               rmAsyncSeries(current, () => next(index + 1))
@@ -162,7 +162,7 @@ let path = require('path');
 
 // 7.4异步并行删除目录
 {
-  function reAsyncParallel (dir, callback) {
+  function reAsyncParallel(dir, callback) {
     setTimeout(() => {
       fs.stat(dir, (err, stat) => {
         if (err) return callback(err);
@@ -172,7 +172,7 @@ let path = require('path');
             let paths = files.map(file => path.join(dir, file));
             if (paths.length > 0) {
               let i = 0;
-              function done () {
+              function done() {
                 if (++i === paths.length) {
                   fs.rmdir(dir, callback)
                 }
@@ -197,7 +197,7 @@ let path = require('path');
 // 7.5同步删除目录(广度优先)
 {
 
-  function rmdirAsync (dir, callback) {
+  function rmdirAsync(dir, callback) {
     let arr = [dir];
     let index = 0;
     while (arr[index]) {
@@ -221,21 +221,21 @@ let path = require('path');
     }
     callback()
   }
-  console.time('同步删除目录')
-  rmdirAsync(path.join(__dirname, '/3'), () => {
-    console.timeEnd('同步删除目录')
-  })
+  //   console.time('同步删除目录')
+  //   rmdirAsync(path.join(__dirname, '/3'), () => {
+  //     console.timeEnd('同步删除目录')
+  //   })
 }
 // 7.6异步删除目录（广度优先）
 {
-  function rmdirWideAsync (dir, callback) {
+  function rmdirWideAsync(dir, callback) {
     let dirs = [dir];
     let index = 0;
-    function rmdir () {
-      // 跳出条件
+    function rmdir() {
+      // 跳出条件，否则一直循环，删除文件，再删除文件夹
       let current = dirs.pop();
       if (current) {
-        fs.stat(dir, (err, stat) => {
+        fs.stat(current, (err, stat) => {
           // 传入rmdir也是类似递归
           if (stat.isDirectory()) {
             fs.rmdir(current, rmdir)
@@ -245,13 +245,14 @@ let path = require('path');
         })
       }
     }
-    (function next () {
+    !function next() {
       let current = dirs[index++];
       if (current) {
         fs.stat(current, (err, stat) => {
           if (err) return callback(err);
           if (stat.isDirectory()) {
             fs.readdir(current, (err, files) => {
+              // 遍历整理文件和文件夹
               dirs = [...dirs, ...files.map(item => path.join(current, item))];
               next()
             })
@@ -262,11 +263,39 @@ let path = require('path');
       } else {
         rmdir()
       }
-    })()
+    }()
   }
-  // console.log('异步删除目录')
-  // console.time('异步删除目录')
-  // rmdirWideAsync(path.join(__dirname, '/3'), () => {
-  //   console.timeEnd('异步删除目录')
+  // rmdirWideAsync(path.join(__dirname, '/4'), (err) => {
+  //   console.log(err)
   // })
+}
+
+/* 8.遍历算法 */
+/**
+ * 目录是一个树状结构，在遍历时一般使用深度优先+先序遍历算法
+ * 深度优先，意味着到达第一个节点后，首先接着遍历子节点而不是邻居节点
+ * 先序遍历，意味着首次到达了某节点就算遍历完成，而不是最后一次返回某节点才算数
+ * 因此使用这种便利方式时，下面的这棵树的遍历顺序是ABDECF
+ *      A
+       / \
+      B   C
+     / \   \
+    D   E   F
+ */
+
+//  8.1同步善妒优先+先序遍历算法
+{
+  function deepSync(dir) {
+    console.log(dir);
+    fs.readdirSync(dir).forEach(file => {
+      let child = path.join(dir, file);
+      let stat = fs.statSync(child);
+      if (stat.isDirectory()) {
+        deepSync(child)
+      } else {
+        console.log(child)
+      }
+    });
+  }
+  deepSync(path.join(__dirname,'3'))
 }
