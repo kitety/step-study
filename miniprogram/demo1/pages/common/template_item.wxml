@@ -1,0 +1,4 @@
+<!-- item.wxml -->
+<template name="item">
+  <text>{{motto}}6666</text>
+</template>
