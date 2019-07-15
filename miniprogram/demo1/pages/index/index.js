@@ -8,9 +8,10 @@ Page({
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    userId: 12,
+    userId: 123,
     show: !true,
-    array: [{ msg: 'hello' }, { msg: 'world' }]
+    array: [{ msg: 'hello' }, { msg: 'world' }],
+    newsData: null
   },
   //事件处理函数
   bindViewTap: function () {
@@ -67,13 +68,27 @@ Page({
   tapMessage: function (e) {
     console.log('tapMessage', e)
   },
-  handleTap3:function(){
+  handleTap3: function () {
     console.log('handleTap3');
   },
-  handleTap2:function(){
+  handleTap2: function () {
     console.log('handleTap2');
   },
-  handleTap1:function(){
+  handleTap1: function () {
     console.log('handleTap1');
+  },
+  loadData: function () {
+    console.log('loadData');
+    var that = this
+    // 开发环境不校验请求域名以及 TLS 版本
+    wx.request({
+      url: 'https://jsonplaceholder.typicode.com/posts',
+      success (res) {
+        console.log(res.data)
+        that.setData({
+          newsData: res.data
+        })
+      }
+    })
   }
 })

@@ -1,0 +1,3 @@
+.page__hd .section__ctn{
+  margin-bottom: 50px;
+}

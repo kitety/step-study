@@ -1,0 +1,31 @@
+<!-- login.wxml -->
+<view class="page">
+  <view class="page__hd">
+    <view class="section__ctn">
+      <image style="width:100px;height:70px;" src="https://cdn.gugujiankong.com/logo180.png"></image>
+    </view>
+    <view class="page__bd">
+      <view class="srction">
+        <input type="text" placeholder="邮箱" auto-focus="true" bindinput="bindEmailInput"></input>
+      </view>
+      <view class="srction">
+        <input type="password" placeholder="密码" bindinput="bindPasswordInput"></input>
+      </view>
+      <view class="srction">
+        <view class="btn-area">
+          <button type="primary" bind:tap="login">登录</button>
+        </view>
+      </view>
+      <view class="srction">
+        <view class="btn-area">
+          <button type="default">新用户注册</button>
+        </view>
+      </view>
+      <view class="srction">
+        <view class="btn-area">
+          <button type="default">忘记密码</button>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

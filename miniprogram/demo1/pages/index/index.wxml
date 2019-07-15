@@ -1,8 +1,8 @@
-  <!-- template -->
-  <import src="../common/template_item.wxml"/>
+<!-- template -->
+<import src="../common/template_item.wxml" />
 <!-- index.wxml -->
 <view class="container">
-<include src="../common/header.wxml"></include>
+  <include src="../common/header.wxml"></include>
   <view class="userinfo">
     <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
       获取头像昵称
@@ -19,24 +19,28 @@
     outer view
     <view id="middle" catchtap="handleTap2">
       middle view
-      <view id="inner"  catchtap="handleTap3">inner view</view>
+      <view id="inner" catchtap="handleTap3">inner view</view>
     </view>
   </view>
-
   <view class="usermotto" hidden="{{userId===123?true:false}}">
     <text class="user-motto">{{motto}}</text>
     <text id="user-{{userId}}">\n{{userId}}</text>
   </view>
   <block wx:if="{{true}}">
-    <view>view1</view>
+    <view>view133</view>
     <view>view2</view>
   </block>
   <view wx:if="{{show}}">TRUE</view>
   <view wx:else>FALSE</view>
   <!-- wx：for -->
   <view wx:for="{{array}}" wx:key="index" wx:for-item="ele">{{ele.msg}}</view>
-
   <template is="item" data="{{motto}}"></template>
-<include src="../common/footer.wxml"></include>
-
+  <include src="../common/footer.wxml"></include>
+  <view>
+    <button type="primary" bind:tap="loadData">load data</button>
+  </view>
+  <!-- 列表数据显示 -->
+  <view wx:for="{{newsData}}"  wx:key="{{item.id}}">
+    <text>Title的Id显示：{{item.id}}</text>
+  </view>
 </view>

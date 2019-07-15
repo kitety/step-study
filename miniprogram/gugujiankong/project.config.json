@@ -1,5 +1,5 @@
 {
-	"description": "Project configuration file",
+	"description": "项目配置文件",
 	"packOptions": {
 		"ignore": []
 	},
@@ -13,9 +13,9 @@
 		"checkInvalidKey": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.0.4",
+	"libVersion": "2.7.5",
 	"appid": "wx98f5efbb76661d3e",
-	"projectname": "miniprogram002",
+	"projectname": "gugujiankong",
 	"debugOptions": {
 		"hidedInDevtools": []
 	},
