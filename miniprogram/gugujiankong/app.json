@@ -1,7 +1,8 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/usercenter/login"
+    "pages/usercenter/login",
+    "pages/fav/fav"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -15,15 +16,21 @@
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "首页",
+        "text": "头条",
         "iconPath": "./pages/images/_ic_tabbar_home.png",
-        "selectedIconPath": "./pages/images/_ic_tabbar_home (1).png"
+        "selectedIconPath": "./pages/images/_ic_tabbar_home(1).png"
+      },
+      {
+        "pagePath": "pages/fav/fav",
+        "text": "收藏",
+        "iconPath": "./pages/images/star.png",
+        "selectedIconPath": "./pages/images/star(1).png"
       },
       {
         "pagePath": "pages/usercenter/login",
         "text": "用户中心",
         "iconPath": "./pages/images/ic_tabbar_explore_select.png",
-        "selectedIconPath": "./pages/images/ic_tabbar_explore_select (1).png"
+        "selectedIconPath": "./pages/images/ic_tabbar_explore_select(1).png"
       }
     ]
   },

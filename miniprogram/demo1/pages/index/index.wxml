@@ -40,7 +40,9 @@
     <button type="primary" bind:tap="loadData">load data</button>
   </view>
   <!-- 列表数据显示 -->
-  <view wx:for="{{newsData}}"  wx:key="{{item.id}}">
+  <view wx:for="{{newsData}}" wx:key="{{item.id}}">
     <text>Title的Id显示：{{item.id}}</text>
   </view>
+  <text>Map</text>
+  <map id="map" longitude="104.061437" latitude="30.65394" style="width:100%;height:300px;" scale="12" markers="{{markers}}"></map>
 </view>

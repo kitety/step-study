@@ -11,7 +11,16 @@ Page({
     userId: 123,
     show: !true,
     array: [{ msg: 'hello' }, { msg: 'world' }],
-    newsData: null
+    newsData: null,
+    markers: [{
+      iconPath: "https://webapi.amap.com/theme/v1.3/markers/b/mark_bs.png",
+      id: 0,
+      longitude: 104.083748,
+      latitude: 30.630869,
+      // longitude: 30.630869,
+      width: 19,
+      height: 25
+    }],
   },
   //事件处理函数
   bindViewTap: function () {

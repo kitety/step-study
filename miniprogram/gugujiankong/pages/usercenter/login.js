@@ -19,6 +19,7 @@ Page({
       icon: 'loading',
       duration: 1000
     })
+    // 2@qq.com 123123
     // 网络请求开始
     wx.request({
       url: 'https://api.gugujiankong.com/account/Login?email=' + this.data.email + '&password=' + this.data.password,
@@ -27,7 +28,7 @@ Page({
       },
       success: function (res) {
         wx.hideToast();
-        console.log(res)
+        console.log(JSON.parse(res.data))
         if (res.data.LoginStatus == 1) {
           // 进行一些用户状态储存
           wx.showToast({
