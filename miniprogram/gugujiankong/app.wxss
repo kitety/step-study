@@ -1,12 +1,12 @@
 /* 导入weuicss样式 */
-@import 'weui.wxss';
+@import "weui.wxss";
 .container {
   display: flex;
   flex-direction: column;
   min-height: 100%;
   justify-content: space-between;
 }
-/* .page-header {
+.page-header {
   font-size: 32px;
   color: #aaa;
   margin-top: 50rpx;
@@ -222,4 +222,16 @@ radio {
 .section_gap .section__title {
   padding-left: 0;
   padding-right: 0;
-} */
+}
+.doc-container {
+  overflow: hidden;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+.doc-title {
+  position: relative;
+  margin: 10px 25px;
+  line-height: 25px;
+  font-size: 25px;
+  color: #666;
+}

@@ -10,6 +10,23 @@ App({
     wx.login({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        console.log(res)
+        if (res.code) {
+          wx.request({
+            url: 'https://api.gugudata.com/account/wxlogin',
+            data: {
+              code: res.code
+            },
+            header: {
+              "Content-Type": 'appication/json'
+            },
+            success: function (res) {
+              console.log(res);
+            }
+          })
+        } else {
+          console.error('登录失败')
+        }
       }
     })
     // 获取用户信息
@@ -34,6 +51,7 @@ App({
     })
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+    openId: ''
   }
 })

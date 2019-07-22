@@ -1,7 +1,7 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/usercenter/login",
+    "pages/usercenter/usercenter",
     "pages/fav/fav"
   ],
   "window": {
@@ -27,7 +27,7 @@
         "selectedIconPath": "./pages/images/star(1).png"
       },
       {
-        "pagePath": "pages/usercenter/login",
+        "pagePath": "pages/usercenter/usercenter",
         "text": "用户中心",
         "iconPath": "./pages/images/ic_tabbar_explore_select.png",
         "selectedIconPath": "./pages/images/ic_tabbar_explore_select(1).png"
