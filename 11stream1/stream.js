@@ -199,4 +199,3 @@ const util = require('util')
   // process.nextTick(()=>stream.uncrok())
 }
 
-/* 5. 简单实现 */

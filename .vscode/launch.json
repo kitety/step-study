@@ -8,7 +8,7 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Program",
-      "program": "${workspaceFolder}\\9fs\\fs2.js"
+      "program": "${workspaceFolder}\\11stream1\\mywritestream.js"
     }
   ]
 }
