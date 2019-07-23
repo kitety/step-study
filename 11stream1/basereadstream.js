@@ -71,4 +71,25 @@ class Readstream extends EventEmitter {
     })
   }
 }
+Readstream.prototype.pipe = function (dest) {
+  this.on('data', data => {
+    let flag = dest.write(data);
+    if (!flag) {
+      this.pause();
+    }
+  })
+  dest.on('drain', () => {
+    this.resume()
+  })
+  dest.on('end', () => {
+    dest.end()
+  })
+}
+Readstream.prototype.pause = function () {
+  this.flowing = false
+}
+Readstream.prototype.resume = function () {
+  this.flowing = true;
+  this.read();
+}
 module.exports = Readstream
