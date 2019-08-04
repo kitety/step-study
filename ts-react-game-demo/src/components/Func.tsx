@@ -6,8 +6,15 @@ interface IProps {
 // 两种方式 其实都是一样的
 const Func: React.FunctionComponent<IProps> = ({ name }) => {
   const [myName, setName] = React.useState<string>(name);
-  console.log(myName);
-  return <div>Func {name}</div>;
+  return (
+    <div
+      onClick={() => {
+        setName("new Myname");
+      }}
+    >
+      Func {myName}
+    </div>
+  );
 };
 // const Func: React.SFC<IProps> = ({ name }) => {
 //   // const [name, setName] = React.useState(props.name);

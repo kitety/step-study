@@ -18,10 +18,12 @@ class Form extends Component<IProps, IState> {
     age: 24,
     name: "111"
   };
-  handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e);
-    // const { name, value } = e.value;
-    // console.log(name, value);
+  handleChange = (e: React.FormEvent<HTMLInputElement>) => {
+    const {
+      name,
+      value
+    }: { name: keyof IState; value: string | number } = e.currentTarget;
+    this.setState({ [name]: value });
   };
   public render() {
     return (
@@ -33,6 +35,12 @@ class Form extends Component<IProps, IState> {
           type="text"
           name="name"
           value={this.state.name}
+          onChange={this.handleChange}
+        />
+        <input
+          type="text"
+          name="age"
+          value={this.state.age}
           onChange={this.handleChange}
         />
       </div>
