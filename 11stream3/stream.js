@@ -77,3 +77,100 @@
   })
   readable.pipe(writable)
 }
+// 实现双工流，我们可以在同一个对象上实现可读和可写，就好像同时继承着两个接口。重要的是双工流的可读性和可写性是完全独立与此于彼此。这仅仅是将两个特性组合成一个对象。
+{
+  const { Duplex } = require('stream');
+  const inoutStream = new Duplex({
+    write (chunk, encoding, callback) {
+      console.log(chunk.toString(), 666);
+      callback()
+    },
+    read (size) {
+      this.push((++this.index) + '')
+      if (this.index > 3) {
+        this.push(null)
+      }
+    }
+  })
+  inoutStream.index = 0;
+  // process.stdin.pipe(inoutStream).pipe(process.stdout)
+}
+
+// 5.实现转换流
+// 转换流的输出是从输入中计算出来的
+// 对于转换流，我们不必实现read或者write方法，我们只需要一个transform方法，将两者结合起来。他有write方法的意思，我们也可以用他来push数据
+{
+  const { Transform } = require('stream');
+  const upperCase = new Transform({
+    transform (chunk, encoding, callback) {
+      this.push(chunk.toString().upperCase());
+      callback()
+    }
+  })
+  // process.stdin.pipe(upperCase).pipe(process.stdout)
+}
+
+// 对象流
+// 默认情况下，流处理的数据是Buffer/String类型的值。有一个ObjectMode标志，我们可以设置它让流可以接受任何JS对象。
+{
+  const { Transform } = require('stream');
+  let fs = require('fs')
+  let rs = fs.createReadStream('./user.json');
+  rs.setEncoding('utf8');
+  let toJson = Transform({
+    readableObjectMode: true,
+    transform (chunk, encoding, callback) {
+      this.push(JSON.parse(chunk));
+      callback()
+    }
+  })
+  let jsonOut = Transform({
+    writeableObjectMode: true,
+    transform (chunk, encoding, callback) {
+      this.push(JSON.parse(chunk));
+      callback()
+    }
+  })
+  // rs.pipe(toJson).pipe(jsonOut)
+}
+
+// 7.unshift
+// readable.unshift()方法会把一块数据压回Buffer内部，这在如下的特定情形有用：代码正在消费一个数据流，已经"乐观的"拉取了数据。又需要“反悔-消费”一些数据，以便这些数据可以传给其他人用。
+{
+  const { Transform } = require('stream');
+  const { StringDecoder } = require('string_decoder');
+  let decoder = new StringDecoder('utf8');
+  const fs = require('fs');
+  // let rs = fs.createReadStream('./req.txt');
+  function parseHeader (stream, callback) {
+    let header = '';
+    rs.on('readable', onReadable);
+    function onReadable () {
+      let chunk;
+      while (null != (chunk = rs.read())) {
+        const str = decoder.write(chunk);
+        if (str.match(/\r\n\r\n/)) {
+          const spilit = str.split(/\r\n\r\n/);
+          console.log(split);
+          header += split.shift();
+          const remaining = split.join('/\r\n\r\n/');
+          const buf = Buffer.from(remaining, 'utf8');
+          if (buf.length) {
+            stream.unshift(buf)
+          }
+          callback(null, header, rs)
+        }
+        else {
+          header += str
+        }
+      }
+    }
+  }
+  parseHeader(rs, function (err, header, stream) {
+    console.log(header);
+    stream.setEncoding('utf8');
+    stream.on('data', data => {
+      console.log(data);
+    })
+  })
+}
