@@ -52,3 +52,9 @@
   cursor: pointer;
   background: yellow;
 }
+.cell[data-player="1"]{
+  background: green;
+}
+.cell[data-player="2"]{
+  background: red;
+}
