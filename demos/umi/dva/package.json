@@ -9,6 +9,7 @@
     "precommit": "lint-staged"
   },
   "dependencies": {
+    "dva-immer": "^0.4.11",
     "dva-logger": "^1.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
