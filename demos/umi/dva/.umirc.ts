@@ -7,11 +7,10 @@ const config: IConfig = {
     // ref: https://umijs.org/plugin/umi-plugin-react.html
     ['umi-plugin-react', {
       antd: false,
-      dva: true,
-      // {
-      //   immer: true
-      // },
-      dynamicImport: false,
+      dva: {
+        immer: true
+      },
+      dynamicImport: true,
       title: 'umi',
       dll: false,
       routes: {
