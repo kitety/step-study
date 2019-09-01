@@ -10,7 +10,10 @@ const config: IConfig = {
       dva: {
         immer: true
       },
-      dynamicImport: true,
+      dynamicImport: {
+        webpackChunkName: true,
+        loadingComponent: './components/Loading.js'
+      },
       title: 'umi',
       dll: false,
       routes: {
