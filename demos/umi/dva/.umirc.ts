@@ -14,10 +14,11 @@ const config: IConfig = {
         webpackChunkName: true,
         loadingComponent: './components/Loading.js'
       },
+      chunks: ['vendors', 'umi'],
       title: 'umi',
       dll: {
-        include:['dva/router','dva/saga','dva/fetch'],
-        exclude:['@babel/runtime']
+        include: ['dva/router', 'dva/saga', 'dva/fetch'],
+        exclude: ['@babel/runtime']
       },
       locale: {
         default: 'zh-CN', //默认语言 zh-CN，如果 baseSeparator 设置为 _，则默认为 zh_CN
@@ -33,6 +34,23 @@ const config: IConfig = {
       },
     }],
   ],
+  chainWebpack(config) {
+    config.optimization.splitChunks({
+      cacheGroups: {
+        vendors: {
+          name: 'vendors',
+          chunks: 'all',
+          test: /[\\/]node_modules[\\/](dva|antd|react|react-dom|react-router|react-router-dom)[\\/]/,
+        },
+        commons: {
+          name: 'commons',
+          chunks: 'async',
+          minChunks: 2,
+          minSize: 0,
+        },
+      },
+    });
+  },
 }
 
 export default config;
