@@ -9,10 +9,12 @@
     "precommit": "lint-staged"
   },
   "dependencies": {
+    "antd": "^3.23.2",
     "dva-immer": "^0.4.11",
     "dva-logger": "^1.0.0",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "react-intl": "^3.2.0"
   },
   "devDependencies": {
     "@types/jest": "^23.3.12",
@@ -32,7 +34,7 @@
     "tslint": "^5.12.0",
     "tslint-eslint-rules": "^5.4.0",
     "tslint-react": "^3.6.0",
-    "umi": "^2.7.0",
+    "umi": "^2.9.3",
     "umi-plugin-react": "^1.9.19",
     "umi-types": "^0.3.0"
   },
