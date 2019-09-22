@@ -138,9 +138,19 @@
       [
         "@babel/plugin-proposal-decorators",
         {
-          "decoratorsBeforeExport": true
+          "legacy": true
+        }
+      ],
+      [
+        "@babel/plugin-proposal-class-properties",
+        {
+          "loose": true
         }
       ]
     ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "mobx-react-devtools": "^6.1.1"
   }
 }
