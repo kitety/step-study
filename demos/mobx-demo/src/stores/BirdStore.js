@@ -35,7 +35,7 @@ export default store
 
 // 初始化执行+修改了observable就会执行
 autorun(() => {
-  console.log(toJS(store.firstBird));
-  console.log(toJS(store.birds));
-  console.log('print')
+  // console.log(toJS(store.firstBird));
+  // console.log(toJS(store.birds));
+  // console.log('print')
 })
