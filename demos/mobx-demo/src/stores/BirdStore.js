@@ -35,6 +35,8 @@ export default store
 
 // 初始化执行+修改了observable就会执行
 // 调用computed会运行 被观察的数据
+
+// 调用了数据的话会注册的，下次修改的话就会调用
 autorun(() => {
   // console.log(toJS(store.firstBird));
   // console.log(toJS(store.birds));

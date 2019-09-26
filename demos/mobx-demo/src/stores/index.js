@@ -5,7 +5,7 @@ class Store {
   constructor(props) {
     // 注意有没有new
     this.birdStore =  BirdStore
-    this.todoListStore = new TodoListStore()
+    this.todoListStore = TodoListStore
   }
 }
 

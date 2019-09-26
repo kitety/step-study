@@ -11,9 +11,15 @@ class App extends React.Component {
     e.preventDefault();
     // this.props.store.birds[0] = this.bird.value
     // 用action来操作数据
-    this.props.birdStore.addBird(this.bird.value)
+    this.store.addBird(this.bird.value)
 
     this.bird.value = ''
+  }
+  // store = () => {
+  //   return this.props.birdStore
+  // }
+  get store () {
+    return this.props.birdStore
   }
   render () {
     // 注入式 引用了才会执行
