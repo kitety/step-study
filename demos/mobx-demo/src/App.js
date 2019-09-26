@@ -17,6 +17,7 @@ class App extends React.Component {
   }
   render () {
     // 注入式 引用了才会执行
+    // 调用观察的对象才会运行  computed
     // this.props.store.birdStore.birds[0] 下标的时候不会运行
     console.log(this.props)
     return (

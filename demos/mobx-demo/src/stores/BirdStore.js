@@ -34,6 +34,7 @@ export default store
 
 
 // 初始化执行+修改了observable就会执行
+// 调用computed会运行 被观察的数据
 autorun(() => {
   // console.log(toJS(store.firstBird));
   // console.log(toJS(store.birds));
