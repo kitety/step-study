@@ -6,6 +6,7 @@ import Fun from './Fun'
 import { compose } from 'recompose'
 import TodoList from './components/TodoLost'
 import Topic from './components/Topic'
+import ReviewApp from './components/ReviewApp'
 
 // @inject('birdStore')
 // @observer
@@ -30,7 +31,8 @@ class App extends React.Component {
     // this.props.store.birdStore.birds[0] 下标的时候不会运行
     console.log(this.props)
     return (
-      <div className="App">
+      <div className="container">
+        <ReviewApp />
         <DevTools />
         <header className="App-header">
           <Topic/>

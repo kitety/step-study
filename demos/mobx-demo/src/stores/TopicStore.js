@@ -2,14 +2,27 @@ import { observable, computed, action, runInAction, flow } from 'mobx'
 
 class TopicStore {
   @observable topics = [];
+  @observable loading = false;
+  @observable error = false;
   // 第一种方式
   @action loadTopics = () => {
+    runInAction(() => {
+      this.loading = true
+      this.error = null
+    })
     fetch('https://cnodejs.org/api/v1/topics').then(res => res.json()).then(data => {
       console.log(data.data)
       // 或者单独抽出一个function
       this.topics = data.data
     }).catch(err => {
       console.log(err)
+      runInAction(() => {
+        this.error = err.message
+      })
+    }).finally(() => {
+      runInAction(() => {
+        this.loading = false
+      })
     })
   }
   // 第二种方式

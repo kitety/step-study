@@ -31,7 +31,17 @@ const store = new Bird()
 // 导出实例
 export default store
 
+class Ticker {
+  @observable tick = 0
+  // 绑定this
+  @action.bound
+  increment () {
+    this.tick++ // 'this' 永远都是正确的
+  }
+}
 
+const ticker = new Ticker()
+setInterval(ticker.increment, 1000)
 
 // 初始化执行+修改了observable就会执行
 // 调用computed会运行 被观察的数据
