@@ -3,9 +3,12 @@ import './App.css';
 import { observer, inject } from "mobx-react"
 import DevTools from 'mobx-react-devtools';
 import Fun from './Fun'
+import { compose } from 'recompose'
+import TodoList from './components/TodoLost'
+import Topic from './components/Topic'
 
-@inject('birdStore')
-@observer
+// @inject('birdStore')
+// @observer
 class App extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
@@ -30,7 +33,8 @@ class App extends React.Component {
       <div className="App">
         <DevTools />
         <header className="App-header">
-          <Fun />
+          <Topic/>
+          <TodoList/>
           <p>第一只鸟的名字 {this.props.birdStore.firstBird}</p>
           <form onSubmit={e => this.handleSubmit(e)}>
             <input type="text" placeholder="Enter you bird name" ref={input => this.bird = input} />
@@ -42,4 +46,6 @@ class App extends React.Component {
   }
 }
 
-export default App;
+// export default App;
+// export default inject('birdStore')(observer(App));
+export default compose(inject('birdStore'),observer)(App);

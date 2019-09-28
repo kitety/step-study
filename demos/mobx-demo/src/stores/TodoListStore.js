@@ -1,18 +1,18 @@
-import { observable, computed, action,toJS } from 'mobx'
+import { observable, computed, action, toJS } from 'mobx'
 import TodoStore from './TodoStore'
 
-class TodoListStore{
-  @observable todos=[]
-  @computed get unfinishedTodoCount(){
-    return this.todos.map(todo=>!todo.finished).length
+class TodoListStore {
+  @observable todos = []
+  @computed get unfinishedTodoCount () {
+    return this.todos.filter(todo => !todo.finished).length
   }
-  @action addTodo(title){
-    this.todos.push(new TodoStore(title) )
+  @action addTodo (title) {
+    this.todos.push(new TodoStore(title))
   }
-  @computed get firstTodo(){
+  @computed get firstTodo () {
     return toJS(this.todos)[0]
   }
 }
-const store = window.store=new TodoListStore()
+const store = window.store = new TodoListStore()
 
 export default store
