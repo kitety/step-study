@@ -1,0 +1,29 @@
+/* pages/classic.wxss */
+text {
+  color: red;
+}
+.container {
+  display: flex;
+  /* row row-reverse column column-reverse */
+  /* view宽度默认100% 高度被撑 要看设没设置 */
+  flex-direction: row;
+  background-color: #999;
+  justify-content: space-around;
+  height: 400px;
+}
+.chunk {
+  width: 100px;
+  height: 100px;
+  /* flex: 1; */
+  /* 行内元素 */
+  /* display: inline-block; */
+}
+.color1 {
+  background-color: aquamarine;
+}
+.color2 {
+  background-color: green;
+}
+.color3 {
+  background-color: blue;
+}

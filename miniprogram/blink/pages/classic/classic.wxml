@@ -1,0 +1,5 @@
+<view class="container">
+  <view class="chunk color1" >1</view>
+  <view class="chunk color2" >2</view>
+  <view class="chunk color3" >4</view>
+</view>
