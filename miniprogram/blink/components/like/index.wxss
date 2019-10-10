@@ -1,0 +1,8 @@
+
+.container {
+  width: 32rpx;
+  height: 28rpx;
+  /* 32px 要除以 2 才是16px，这才是想要的 ，即为32rpx*/
+  /* 750*1334 iphone6 */
+  /* rpx自适应 */
+}
