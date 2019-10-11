@@ -1,0 +1,7 @@
+/* 页面，小程序自动加的 */
+/* 组件只能继承少量全局样式 font color */
+/* 所有的样式可以被page继承 */
+page {
+  font-family: "PingFangSC-Thin";
+  font-size: 32rpx;
+}

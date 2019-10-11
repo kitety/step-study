@@ -1,8 +1,23 @@
-
 .container {
+  /* 行内flex 注意位数变化的跳动 */
+  display: inline-flex;
+  flex-direction: row;
+  padding: 10rpx;
+}
+.container image {
   width: 32rpx;
   height: 28rpx;
   /* 32px 要除以 2 才是16px，这才是想要的 ，即为32rpx*/
   /* 750*1334 iphone6 */
   /* rpx自适应 */
+}
+.container text {
+  font-size: 24rpx;
+  color: #bbb;
+  /* font-family:"PingFangSC-Thin" ; */
+  position: relative;
+  bottom: 10rpx;
+  left: 6rpx;
+  /* 而不是增大bottom 去除无用空白 */
+  line-height: 24rpx;
 }
