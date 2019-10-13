@@ -12,7 +12,18 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    // 这里的this可以绑定到数据
+    // 发送请求
+    wx.request({
+      url: 'http://bl.7yue.pro/v1/classic/latest',
+      header: {
+        "appkey": 'AbhC31IG7ruCDp57'
+      },
+      // 这里要用箭头函数绑定this
+      success:res=> {
+        console.log(this,res)
+      }
+    })
   },
 
   /**
