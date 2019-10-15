@@ -1,3 +1,7 @@
+// 注意小程序会把绝对路径，当做相对路径解析
+// import { HTTP } from '/util/http.js' // 报错
+import { HTTP } from '../../util/http.js'
+let http=new HTTP()
 // pages/classic.js
 Page({
 
@@ -14,14 +18,11 @@ Page({
   onLoad: function (options) {
     // 这里的this可以绑定到数据
     // 发送请求
-    wx.request({
-      url: 'http://bl.7yue.pro/v1/classic/latest',
-      header: {
-        "appkey": 'AbhC31IG7ruCDp57'
-      },
+    http.request({
+      url: '/classic/latest',
       // 这里要用箭头函数绑定this
-      success:res=> {
-        console.log(this,res)
+      success: res => {
+        console.log(this, res)
       }
     })
   },
