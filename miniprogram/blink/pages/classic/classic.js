@@ -1,7 +1,10 @@
 // 注意小程序会把绝对路径，当做相对路径解析
 // import { HTTP } from '/util/http.js' // 报错
-import { HTTP } from '../../util/http.js'
-let http=new HTTP()
+// import { HTTP } from '../../util/http.js'
+import { ClassicModel } from '../../models/classic.js'
+import { LikeModel } from '../../models/like.js'
+let classicModel = new ClassicModel()
+let likeModel = new LikeModel()
 // pages/classic.js
 Page({
 
@@ -9,7 +12,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    classic: {}
   },
 
   /**
@@ -17,13 +20,10 @@ Page({
    */
   onLoad: function (options) {
     // 这里的this可以绑定到数据
-    // 发送请求
-    http.request({
-      url: '/classic/latest',
-      // 这里要用箭头函数绑定this
-      success: res => {
-        console.log(this, res)
-      }
+    classicModel.getLatest(res => {
+      console.log(res)
+      // 数据更新 新增
+      this.setData({ classic: res })
     })
   },
 
@@ -74,5 +74,10 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  likeClick (data) {
+    console.log(data.detail.behavior)
+    let behavior = data.detail.behavior
+    likeModel.like({ category: this.data.classic.type, behavior, artId: this.data.classic.id })
   }
 })

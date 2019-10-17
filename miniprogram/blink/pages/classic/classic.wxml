@@ -1,1 +1,4 @@
-<v-like/>
+<view>
+  <v-like count="{{classic.fav_nums}}" like="{{classic.like_status}}" bind:like="likeClick" />
+  <v-movie img="{{classic.image}}" content="{{classic.content}}"></v-movie>
+</view>

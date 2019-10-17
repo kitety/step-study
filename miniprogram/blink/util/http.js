@@ -21,7 +21,7 @@ class HTTP {
       },
       success: res => {
         let code = res.statusCode.toString()
-        if (code.startsWith('2')) {
+        if (code.startsWith('2') && params.success) {
           params.success(res.data)
         } else {
           // 服务器异常

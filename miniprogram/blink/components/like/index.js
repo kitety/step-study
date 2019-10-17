@@ -33,6 +33,10 @@ Component({
       this.setData({
         count, like: !like
       })
+      // 激活
+      let behavior = this.data.like ? 'like' : 'cancel'
+      // 事件触发
+      this.triggerEvent('like', { behavior }, {})
     }
   }
 });
