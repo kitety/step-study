@@ -22,7 +22,8 @@ Component({
   data: {
     year: 0,
     month: '一月',
-    _index: ''
+    _index: '',
+    months: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
   },
 
   /**
@@ -33,6 +34,9 @@ Component({
   },
   attached () {
     // 不知道是否真的传入了index
-    console.log(this.properties);
+    let date = new Date();
+    let year = date.getFullYear()
+    let month = this.data.months[date.getMonth()];
+    this.setData({ year, month })
   },
 })
