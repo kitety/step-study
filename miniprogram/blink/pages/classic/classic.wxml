@@ -1,7 +1,8 @@
-<view>
+<view class="container">
   <view class="header">
     <v-epsoide index="{{classic.index}}" class="epsoide"/>
     <v-like count="{{classic.fav_nums}}" like="{{classic.like_status}}" bind:like="likeClick" class="like"/>
   </view>
   <v-movie img="{{classic.image}}" content="{{classic.content}}"></v-movie>
+  <v-navi class="navi" title="{{classic.title}}" first="{{first}}" latest="{{latest}}" bind:left="onNext" bind:right="onPrevious"/>
 </view>

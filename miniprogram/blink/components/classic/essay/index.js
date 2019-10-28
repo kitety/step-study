@@ -1,4 +1,4 @@
-// components/classic/movie/index.js
+// components/classic/essay/index.js
 import { classic_beh } from '../classic-beh.js'
 Component({
   /**

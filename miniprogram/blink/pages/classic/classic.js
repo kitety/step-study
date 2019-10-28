@@ -12,7 +12,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    classic: {}
+    classic: {},
+    latest: true,
+    first: false
   },
 
   /**
@@ -76,8 +78,24 @@ Page({
 
   },
   likeClick (data) {
-    console.log(data.detail.behavior)
     let behavior = data.detail.behavior
     likeModel.like({ category: this.data.classic.type, behavior, artId: this.data.classic.id })
+  },
+  onPrevious () {
+    this._updateClassic('previous')
+
+  },
+  onNext () {
+    this._updateClassic('next')
+  },
+  _updateClassic(nextOrPrevious){
+    const { index } = this.data.classic
+    classicModel.getClassic(index, nextOrPrevious, res => {
+      this.setData({
+        classic: res,
+        latest: classicModel.isLatest(res.index),
+        first: classicModel.isFirst(res.index)
+      })
+    })
   }
 })
