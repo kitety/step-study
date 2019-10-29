@@ -14,7 +14,9 @@ Page({
   data: {
     classic: {},
     latest: true,
-    first: false
+    first: false,
+    likeCount: 0,
+    likeStatus: false
   },
 
   /**
@@ -25,7 +27,11 @@ Page({
     classicModel.getLatest(res => {
       console.log(res)
       // 数据更新 新增
-      this.setData({ classic: res })
+      this.setData({
+        classic: res,
+        likeCount: res.fav_nums,
+        likeStatus: res.like_status
+      })
     })
   },
 
@@ -88,13 +94,23 @@ Page({
   onNext () {
     this._updateClassic('next')
   },
-  _updateClassic(nextOrPrevious){
+  // 上下条的更新
+  _updateClassic (nextOrPrevious) {
     const { index } = this.data.classic
     classicModel.getClassic(index, nextOrPrevious, res => {
+      this._getLikeStatus(res.id, res.type)
       this.setData({
         classic: res,
         latest: classicModel.isLatest(res.index),
         first: classicModel.isFirst(res.index)
+      })
+    })
+  },
+  _getLikeStatus (artId, category) {
+    likeModel.getClassicLikeStatus(artId, category, res => {
+      this.setData({
+        likeCount: res.fav_nums,
+        likeStatus: res.like_status
       })
     })
   }

@@ -6,6 +6,9 @@ Component({
    */
   // 继承的可以被子组件的覆盖,behaviors数组中的后面会覆盖前面的。但是生命周期函数不会覆盖，会一一执行
   behaviors: [classic_beh],
+  properties:{
+    src:String
+  },
   /**
    * 组件的初始数据
    */

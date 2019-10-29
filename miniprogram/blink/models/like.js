@@ -15,5 +15,14 @@ class LikeModel extends HTTP {
       }
     })
   }
+  getClassicLikeStatus (artId, category, cb ) {
+    this.request({
+      url: `classic/${category}/${artId}/favor`,
+      // 这里要用箭头函数绑定this
+      success: res => {
+        cb && cb(res)
+      }
+    })
+  }
 }
 export { LikeModel }
