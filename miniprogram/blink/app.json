@@ -2,6 +2,9 @@
   "pages": [
     "pages/classic/classic"
   ],
+  "requiredBackgroundModes": [
+    "audio"
+  ],
   "window": {
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "Extended",
