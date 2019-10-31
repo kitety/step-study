@@ -34,6 +34,29 @@ Component({
         mMgr.src = this.properties.src
       }
       this.setData({ playing: !playing })
+    },
+    _recoverStatus () {
+      // mMgr.stop()
+      if (mMgr.paused) {
+        this.setData({ playing: false })
+      } else if (mMgr.src === this.properties.src) {
+        this.setData({ playing: true })
+      }
+    },
+    _monitorSwitch () {
+      // 有四种状态 播放 暂停 关闭 结束
+      mMgr.onPlay(() => {
+        this._recoverStatus()
+      })
+      mMgr.onPause(() => {
+        this._recoverStatus()
+      })
+      mMgr.onStop(() => {
+        this._recoverStatus()
+      })
+      mMgr.onEnded(() => {
+        this._recoverStatus()
+      })
     }
   },
   // 组件卸载
@@ -42,11 +65,7 @@ Component({
   },
   // 组件加载
   attached () {
-    // mMgr.stop()
-    if (mMgr.paused) {
-      this.setData({ playing: false })
-    } else if (mMgr.src === this.properties.src) {
-      this.setData({ playing: true })
-    }
+    this._recoverStatus()
+    this._monitorSwitch()
   }
 })
