@@ -10,7 +10,7 @@ const tips = {
   1006: '服务器内部错误',
 }
 class HTTP {
-  request (url, data, method = 'GET') {
+  request ({ url, data, method = 'GET' }) {
     return new Promise((resolve, reject) => {
       this._request(url, resolve, reject, data, method)
     })

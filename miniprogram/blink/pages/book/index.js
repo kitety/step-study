@@ -1,11 +1,13 @@
 // pages/book/index.js
+import { BookModel } from '../../models/book'
+const bookModel = new BookModel()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    books: []
   },
 
   /**
@@ -14,10 +16,33 @@ Page({
   onLoad: function () {
     // 对象 保存状态
     // pending fulfilled rejected
-    const promise = new Promise((resolve, reject) => {
-      wx.getSystemInfo({ success: res => resolve(res), fail: err => { reject(err) } })
+    // const promise = new Promise((resolve, reject) => {
+    //   wx.getSystemInfo({ success: res => resolve(res), fail: err => { reject(err) } })
+    // })
+    // promise.then(res => { console.log(res); }, err => { throw new TypeError(err) })
+
+    // 多个api
+    // const promise = bookModel.getHotList()
+    // promise.then((result) => {
+    //   console.log(result)
+    //   bookModel.getMyBookCount().then((res) => {
+    //     console.log(res)
+    //   })
+    // })
+
+    // 新的promise调用
+    // const promise = bookModel.getHotList()
+    // promise.then((result) => {
+    //   console.log(result)
+    //   return bookModel.getMyBookCount()
+    // }).then((res) => {
+    //   console.log(res)
+    // })
+    const promise = bookModel.getHotList()
+    promise.then((result) => {
+      console.log(result)
+      this.setData({ books: result })
     })
-    promise.then(res => { console.log(res); },err=>{throw new TypeError(err)})
 
 
   },

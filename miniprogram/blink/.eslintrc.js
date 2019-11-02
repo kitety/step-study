@@ -14,5 +14,5 @@ module.exports = {
   },
   "rules": {
   },
-  "globals": { wx: true, Page: true }
+  "globals": { wx: true, Page: true ,Component: true }
 };
