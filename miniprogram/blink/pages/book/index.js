@@ -11,7 +11,14 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function () {
+    // 对象 保存状态
+    // pending fulfilled rejected
+    const promise = new Promise((resolve, reject) => {
+      wx.getSystemInfo({ success: res => resolve(res), fail: err => { reject(err) } })
+    })
+    promise.then(res => { console.log(res); },err=>{throw new TypeError(err)})
+
 
   },
 
