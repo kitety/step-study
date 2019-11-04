@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/classic/index",
     "pages/book/index",
+    "pages/classic/index",
     "pages/my/index"
   ],
   "requiredBackgroundModes": [
