@@ -8,7 +8,7 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Program",
-      "program": "${workspaceFolder}\\11stream3\\stream.js"
+      "program": "${workspaceFolder}\\base\\13tcp\\tcp.js"
     }
   ]
 }
