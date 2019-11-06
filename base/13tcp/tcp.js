@@ -1,20 +1,15 @@
-let net = require('net')
-let path = require('path')
-let ws = require('fs').createWriteStream(path.resolve(__dirname, 'msg.txt'))
+const net = require('net')
+const path = require('path')
+let file = require('fs').createWriteStream(path.join(__dirname, 'msg.txt'))
 let server = net.createServer(socket => {
-  socket.on('data', data => {
-    console.log(data)
-  })
-  socket.pipe(
-    ws,
-    { end: false }
-  )
-  socket.on('end',()=>{
-    ws.on('over',()=>{
-      ws.unpipe(ws)
-    })
+  console.log('客户端已连接')
+  socket.pause()
+  socket.setTimeout(5000)
+  socket.on('timeout',()=>{
+    console.log('timeout')
+    socket.pipe(file)
   })
 })
-server.listen(8080, 'localhost', function() {
-  console.log('服务端开始监听')
+server.listen(8080, () => {
+  console.log('开始监听在8080')
 })
