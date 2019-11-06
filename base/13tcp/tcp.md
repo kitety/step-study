@@ -235,3 +235,28 @@ server.listen(8080, () => {
   console.log('开始监听在8080')
 })
 ```
+## 1.3 TCP客户端
+### 1.3.1 创建TCP
+```js
+let socket = new net.Socket([options])
+```
+- options <Object> 可用选项有
+  - fd <number> 如果指定了该参数，则使用一个给定的文件描述符包装一个已存在的 socket，否则将创建一个新的 socket。
+  - allowHalfOpen <boolean> 指示是否允许半打开的 TCP 连接。服务器收到FIN包时不回发FIN包，可以使服务器可以继续向客户端发数据。详情查看 net.createServer() 和 'end' 事件。默认值: false。
+  - readable <boolean> 当传递了 fd 时允许读取 socket，否则忽略。默认值: false。
+  - writable <boolean> 当传递了 fd 时允许写入 socket，否则忽略。默认值: false。
+```js
+socket.connect(port,host,callback)
+socket.on('connect,.callback)
+```
+### 1.3.2
+向服务端写入数据、end、error、destroy、close
+- write表示向服务器写入数据
+- end 用于结束连接
+- error 连接发生错误
+- destroy 销毁流
+- close 表示连接关闭成功，hasError=true代表有可能有错误
+```js
+//在 socket 上发送数据。第二个参数制定了字符串的编码 - 默认是 UTF8 编码。
+socket.write(data,[encoding],[callback]);
+```
