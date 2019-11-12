@@ -18,6 +18,12 @@ Component({
    * 组件的方法列表
    */
   methods: {
-
+    onTap () {
+      // console.log(this.data.book.id)
+      wx.navigateTo({
+        url: '/pages/bookdetail/index?bookid=' + this.data.book.id
+      })
+      // 组件通用性
+    }
   }
 })
