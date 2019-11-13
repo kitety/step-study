@@ -24,11 +24,11 @@ Page({
     const comments = bookModel.getComments(bookid)
     const likeStatus = bookModel.getLikeStatus(bookid)
     detail.then((book) => {
-      console.log(book);
+      console.log('book', book);
       this.setData({ book })
     })
-    comments.then((comments) => {
-      console.log(comments);
+    comments.then(({ comments }) => {
+      console.log('comments', comments);
       this.setData({ comments })
     })
     likeStatus.then((res) => {
