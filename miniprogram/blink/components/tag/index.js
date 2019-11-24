@@ -22,6 +22,8 @@ Component({
    * 组件的方法列表
    */
   methods: {
-
+    handleTagTap () {
+      this.triggerEvent('tagTapping', { text: this.properties.text })
+    }
   }
 })

@@ -1,5 +1,11 @@
-import { BookModel } from '../../models/book'
+import {
+  BookModel
+} from '../../models/book'
+import {
+  LikeModel
+} from '../../models/like.js'
 const bookModel = new BookModel()
+const likeModel = new LikeModel()
 // pages/bookdetail/index.js
 Page({
 
@@ -10,7 +16,8 @@ Page({
     book: {},
     comments: [],
     likeStatus: false,
-    likeCount: 0
+    likeCount: 0,
+    posting: false
   },
 
   /**
@@ -18,18 +25,26 @@ Page({
    */
   // 页面接收的参数
   onLoad: function (options) {
-    const { bookid } = options
+    const {
+      bookid
+    } = options
     console.log(bookid);
     const detail = bookModel.getDetail(bookid)
     const comments = bookModel.getComments(bookid)
     const likeStatus = bookModel.getLikeStatus(bookid)
     detail.then((book) => {
       console.log('book', book);
-      this.setData({ book })
+      this.setData({
+        book
+      })
     })
-    comments.then(({ comments }) => {
+    comments.then(({
+      comments
+    }) => {
       console.log('comments', comments);
-      this.setData({ comments })
+      this.setData({
+        comments
+      })
     })
     likeStatus.then((res) => {
       console.log(res);
@@ -87,5 +102,42 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+  onLike (e) {
+    let data = {
+      behavior: e.detail.behavior,
+      artId: this.data.book.id,
+      category: 400
+    }
+    likeModel.like(data)
+  },
+  showFakePost () {
+    this.setData({ posting: true })
+  },
+  hideFakePost () {
+    this.setData({ posting: false })
+  },
+  onPost:function (e) {
+    const comment = e.detail.text
+    if (comment.length > 12) {
+      wx.showToast({
+        title: '短评最多12字',
+        icon: 'none'
+      })
+      return
+    }
+    bookModel.postComment(this.data.book.id, comment).then(() => {
+      this.setData({
+        posting: false,
+        comments: this.data.comments.unshift({
+          content: "comment",
+          nums: 1
+        })
+      })
+      wx.showToast({
+        title: '+1',
+        icon: 'none'
+      })
+    })
+  },
 })

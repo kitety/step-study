@@ -41,11 +41,26 @@
     </view>
   </view>
 </view>
-<view class="post-container">
-  <view class="post-fake">
+<view class="post-container" wx:if="{{!posting}}">
+  <view class="post-fake" bind:tap="showFakePost">
     <text>输入短评</text>
   </view>
   <view class="like-container">
     <v-like bind:like="onLike" class="like" like="{{likeStatus}}" count="{{likeCount}}"></v-like>
   </view>
 </view>
+<view class="posting-container" wx:if="{{posting}}">
+  <view class="post-header">
+    <text>仅可点击编辑+1</text>
+    <text class="cancel" bind:tap="hideFakePost">取消</text>
+  </view>
+  <view class="comment-container" bind:tagTapping="onPost">
+    <block wx:for="{{util.limit(comments,3)}}" wx:key="{{item.content}}">
+      <v-tag text="{{item.content}}" tag-class="{{'ex-tag'+index}}">
+        <text slot="after" class="num">+{{item.nums}}</text>
+      </v-tag>
+    </block>
+  </view>
+  <input class="post" placeholder="短评最多12个字" />
+</view>
+<v-mask wx:if="{{posting}}"></v-mask>

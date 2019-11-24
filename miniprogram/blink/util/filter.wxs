@@ -6,6 +6,9 @@ var format = function (text) {
   return text.replace(reg, '\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')
 }
 var limit = function (array, n) {
+  if (!array) {
+    return ''
+  }
   return array.slice(0, n)
 }
 // wxs 不能用es6
