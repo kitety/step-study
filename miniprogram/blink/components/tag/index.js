@@ -9,6 +9,7 @@ Component({
   properties: {
     text: String
   },
+  externalClasses: ['tag-class'],
 
   /**
    * 组件的初始数据

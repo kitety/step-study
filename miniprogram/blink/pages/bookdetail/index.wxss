@@ -61,11 +61,77 @@
   color: #aaa;
 }
 /* tag的背景 子元素*/
-.comment-container > v-tag:nth-child(2) > view {
+/* .comment-container > v-tag:nth-child(2) > view {
   background-color: #fffbdd;
 }
 .comment-container > v-tag:nth-child(1) > view {
   background-color: #eefbff;
+} */
+
+.ex-tag0 {
+  background-color: #fffbdd !important;
+}
+.ex-tag1 {
+  background-color: #eefbff !important;
+}
+
+/* 内容简介 */
+.content {
+  font-weight: 500;
+  text-indent: 2em;
+}
+
+/* 书本信息 */
+.detail-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin-bottom: 100rpx;
+  font-size: 28rpx;
+  color: #666;
+}
+.vertical {
+  display: flex;
+  flex-direction: column;
+}
+.description {
+  color: #999;
+  margin-right: 30rpx;
+}
+.post-container {
+  height: 100rpx;
+  box-shadow: 1px -1px 1px #e3e3e3;
+  position: fixed;
+  width: 690rpx;
+  background-color: #fff;
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0 30rpx;
+  justify-content: space-between;
+}
+.post-fake {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 60rpx;
+  width: 460rpx;
+  border: 1px solid #999;
+  border-radius: 100rpx;
+  font-size: 22rpx;
+  padding-left: 20rpx;
+}
+.like {
+  margin-right: 30rpx;
+  margin-top: 10rpx;
+}
+.like-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 /* 开源ui

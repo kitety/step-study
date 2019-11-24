@@ -8,7 +8,7 @@ Page({
    */
   data: {
     book: {},
-    comments: null,
+    comments: [],
     likeStatus: false,
     likeCount: 0
   },
