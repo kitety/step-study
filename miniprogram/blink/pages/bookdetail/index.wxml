@@ -8,7 +8,8 @@
   </view>
   <view class="sub-container">
     <text class="headline">短评</text>
-    <view class="comment-container">
+    <text class="shadow" wx:if="{{comments.length===0}}">还没有短评</text>
+    <view class="comment-container" wx:if="{{comments.length>0}}">
       <block wx:for="{{util.limit(comments,8)}}" wx:key="{{item.content}}">
         <v-tag text="{{item.content}}" tag-class="{{'ex-tag'+index}}">
           <text slot="after" class="num">+{{item.nums}}</text>
@@ -51,16 +52,18 @@
 </view>
 <view class="posting-container" wx:if="{{posting}}">
   <view class="post-header">
-    <text>仅可点击编辑+1</text>
+    <text wx:if="{{comments.length>0}}">仅可点击编辑+1</text>
+    <text class="shadow" wx:else>暂无短评</text>
     <text class="cancel" bind:tap="hideFakePost">取消</text>
   </view>
-  <view class="comment-container" bind:tagTapping="onPost">
+  <view class="comment-container">
     <block wx:for="{{util.limit(comments,3)}}" wx:key="{{item.content}}">
-      <v-tag text="{{item.content}}" tag-class="{{'ex-tag'+index}}">
+      <v-tag text="{{item.content}}" tag-class="{{'ex-tag'+index}}" bind:tapping="onPost">
         <text slot="after" class="num">+{{item.nums}}</text>
       </v-tag>
     </block>
   </view>
-  <input class="post" placeholder="短评最多12个字" />
+  <input class="post" placeholder="短评最多12个字" bindconfirm="onPost" />
 </view>
 <v-mask wx:if="{{posting}}"></v-mask>
+<!-- 输入框的事件bindconfirm -->

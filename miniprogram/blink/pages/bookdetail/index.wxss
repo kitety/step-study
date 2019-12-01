@@ -182,6 +182,10 @@
   border-radius: 15px;
   padding-left: 25rpx;
 }
+/* 还没有短评 */
+.shadow{
+  color: #999;
+}
 
 /* 开源ui
 默认样式，自定义样式，开发者，要求用户

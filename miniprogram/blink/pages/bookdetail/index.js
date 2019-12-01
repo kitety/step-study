@@ -41,7 +41,6 @@ Page({
     comments.then(({
       comments
     }) => {
-      console.log('comments', comments);
       this.setData({
         comments
       })
@@ -117,8 +116,9 @@ Page({
   hideFakePost () {
     this.setData({ posting: false })
   },
-  onPost:function (e) {
-    const comment = e.detail.text
+  onPost (e) {
+    // 兼容写法
+    const comment = e.detail.value || e.detail.text
     if (comment.length > 12) {
       wx.showToast({
         title: '短评最多12字',
@@ -127,12 +127,13 @@ Page({
       return
     }
     bookModel.postComment(this.data.book.id, comment).then(() => {
+      this.data.comments.unshift({
+        content: comment,
+        nums: 1
+      })
       this.setData({
         posting: false,
-        comments: this.data.comments.unshift({
-          content: "comment",
-          nums: 1
-        })
+        comments: this.data.comments
       })
       wx.showToast({
         title: '+1',
