@@ -2,9 +2,9 @@
   <v-book book="{{item}}" />
 </block> -->
 <!-- <v-book book="{{item}}" wx:for="{{books}}" /> -->
-<view class="container">
+<view class="container"  wx:if="{{!searching}}">
   <view class="header">
-    <view class="box">
+    <view class="box" bind:tap="onSearch">
       <image src="/images/icon/search.png" />
       <text>搜索书籍</text>
     </view>
@@ -18,3 +18,4 @@
     </view>
   </view>
 </view>
+<v-search wx:else bind:onCancelSearch="closeSearch"/>

@@ -1,0 +1,24 @@
+<view class="container">
+  <view class="header">
+    <view class="search-container">
+      <image class="icon" src="images/search.png" />
+      <input type="text" class="bar" placeholder-class="in-bar" placeholder="书籍名" auto-focus="{{true}}" bindconfirm="onConfirm"/>
+      <image class="icon" src="images/cancel.png" />
+    </view>
+    <view class="cancel" bind:tap="onCancelSearch">取消</view>
+  </view>
+  <view>
+    <view class="history">
+      <view class="title">
+        <view class="chunk"></view>
+        <text>历史搜索</text>
+      </view>
+    </view>
+    <view class="history hot-search">
+      <view class="title">
+        <view class="chunk"></view>
+        <text>热门搜索</text>
+      </view>
+    </view>
+  </view>
+</view>

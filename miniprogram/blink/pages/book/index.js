@@ -7,7 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    books: []
+    books: [],
+    searching: false
   },
 
   /**
@@ -89,5 +90,12 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  onSearch () {
+    this.setData({ searching: true })
+  },
+  closeSearch () {
+    this.setData({ searching: false })
   }
+
 })
