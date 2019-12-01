@@ -19,7 +19,6 @@ Component({
    */
   methods: {
     onTap () {
-      // console.log(this.data.book.id)
       wx.navigateTo({
         url: '/pages/bookdetail/index?bookid=' + this.data.book.id
       })

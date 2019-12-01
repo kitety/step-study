@@ -23,7 +23,6 @@ Component({
    */
   methods: {
     handleTagTap () {
-      console.log(this);
       this.triggerEvent('tapping', {
         text: this.properties.text
       })

@@ -25,7 +25,6 @@ Page({
   onLoad: function (options) {
     // 这里的this可以绑定到数据
     classicModel.getLatest(res => {
-      console.log(res)
       // 数据更新 新增
       this.setData({
         classic: res,

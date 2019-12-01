@@ -24,23 +24,18 @@ Page({
     // 多个api
     // const promise = bookModel.getHotList()
     // promise.then((result) => {
-    //   console.log(result)
     //   bookModel.getMyBookCount().then((res) => {
-    //     console.log(res)
     //   })
     // })
 
     // 新的promise调用
     // const promise = bookModel.getHotList()
     // promise.then((result) => {
-    //   console.log(result)
     //   return bookModel.getMyBookCount()
     // }).then((res) => {
-    //   console.log(res)
     // })
     const promise = bookModel.getHotList()
     promise.then((result) => {
-      console.log(result)
       this.setData({ books: result })
     })
 

@@ -25,33 +25,44 @@ Page({
    */
   // 页面接收的参数
   onLoad: function (options) {
+    wx.showLoading();
     const {
       bookid
     } = options
-    console.log(bookid);
     const detail = bookModel.getDetail(bookid)
     const comments = bookModel.getComments(bookid)
     const likeStatus = bookModel.getLikeStatus(bookid)
-    detail.then((book) => {
-      console.log('book', book);
+    // 旧的promise写法
+    // detail.then((book) => {
+    //   this.setData({
+    //     book
+    //   })
+    // })
+    // comments.then(({
+    //   comments
+    // }) => {
+    //   this.setData({
+    //     comments
+    //   })
+    // })
+    // likeStatus.then((res) => {
+    //   this.setData({
+    //     likeStatus: res.like_status,
+    //     likeCount: res.fav_nums
+    //   })
+    // })
+    // 新的promise写法
+    Promise.all([detail, comments, likeStatus]).then((result) => {
+      const [book, { comments }, like] = result
       this.setData({
-        book
+        book,
+        comments,
+        likeStatus: like.like_status,
+        likeCount: like.fav_nums
       })
+      wx.hideLoading()
     })
-    comments.then(({
-      comments
-    }) => {
-      this.setData({
-        comments
-      })
-    })
-    likeStatus.then((res) => {
-      console.log(res);
-      this.setData({
-        likeStatus: res.like_status,
-        likeCount: res.fav_nums
-      })
-    })
+
   },
 
   /**
