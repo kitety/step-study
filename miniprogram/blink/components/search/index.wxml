@@ -2,16 +2,21 @@
   <view class="header">
     <view class="search-container">
       <image class="icon" src="images/search.png" />
-      <input type="text" class="bar" placeholder-class="in-bar" placeholder="书籍名" auto-focus="{{true}}" bindconfirm="onConfirm"/>
+      <input type="text" class="bar" placeholder-class="in-bar" placeholder="书籍名" auto-focus="{{true}}" bindconfirm="onConfirm" />
       <image class="icon" src="images/cancel.png" />
     </view>
     <view class="cancel" bind:tap="onCancelSearch">取消</view>
   </view>
-  <view>
+  <view wx:if="{{!searching}}">
     <view class="history">
       <view class="title">
         <view class="chunk"></view>
         <text>历史搜索</text>
+      </view>
+      <view class="tags">
+        <block wx:for="{{historyWords}}" wx:key="{{index}}">
+          <v-tag text="{{item}}"  bind:tapping="onConfirm"/>
+        </block>
       </view>
     </view>
     <view class="history hot-search">
@@ -19,6 +24,17 @@
         <view class="chunk"></view>
         <text>热门搜索</text>
       </view>
+      <view class="tags">
+        <block wx:for="{{hotWords}}" wx:key="{{index}}">
+          <v-tag text="{{item}}"  bind:tapping="onConfirm"/>
+        </block>
+      </view>
     </view>
+  </view>
+  <!-- 搜索结果 -->
+  <view wx:if="{{searching}}" class="books-container">
+    <block wx:for="{{books}}" wx:key="{{item.id}}">
+      <v-book book="{{item}}" />
+    </block>
   </view>
 </view>

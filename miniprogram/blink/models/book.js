@@ -24,5 +24,8 @@ class BookModel extends HTTP {
       }
     })
   }
+  search (q, start = 0) {
+    return this.request({ url: '/book/search', data: { q, start, summary: 1 } })
+  }
 }
 export { BookModel }
