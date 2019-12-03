@@ -18,7 +18,8 @@ Component({
     historyWords: [],
     hotWords: [],
     dataArray: [],
-    searching: false
+    searching: false,
+    q:''
   },
   attached () {
     const historyWords = keyWordModel.getHistory()
@@ -36,10 +37,15 @@ Component({
       this.triggerEvent('onCancelSearch')
       this.setData({ searching: false })
     },
+    onDelete () {
+      this.setData({ searching: false,q:'' })
+    },
     onConfirm (e) {
+      // loading
       wx.showLoading();
-      this.setData({ searching: true })
       const q = e.detail.value || e.detail.text
+      this.setData({ searching: true,q })
+      // 获取文本
       bookModel.search(q).then((result) => {
         console.log(result);
         const { books } = result

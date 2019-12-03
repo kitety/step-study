@@ -2,8 +2,8 @@
   <view class="header">
     <view class="search-container">
       <image class="icon" src="images/search.png" />
-      <input type="text" class="bar" placeholder-class="in-bar" placeholder="书籍名" auto-focus="{{true}}" bindconfirm="onConfirm" />
-      <image class="icon" src="images/cancel.png" />
+      <input type="text" class="bar" placeholder-class="in-bar" placeholder="书籍名" auto-focus="{{true}}" bindconfirm="onConfirm" value="{{q}}"/>
+      <image class="icon" src="images/cancel.png" bind:tap="onDelete"/>
     </view>
     <view class="cancel" bind:tap="onCancelSearch">取消</view>
   </view>
