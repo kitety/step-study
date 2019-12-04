@@ -18,4 +18,4 @@
     </view>
   </view>
 </view>
-<v-search wx:else bind:onCancelSearch="closeSearch"/>
+<v-search wx:else bind:onCancelSearch="closeSearch" more="{{more}}"/>
