@@ -2,8 +2,8 @@
   <view class="header">
     <view class="search-container">
       <image class="icon" src="images/search.png" />
-      <input type="text" class="bar" placeholder-class="in-bar" placeholder="书籍名" auto-focus="{{true}}" bindconfirm="onConfirm" value="{{q}}"/>
-      <image class="icon" src="images/cancel.png" bind:tap="onDelete"/>
+      <input type="text" class="bar" placeholder-class="in-bar" placeholder="书籍名" auto-focus="{{true}}" bindconfirm="onConfirm" value="{{q}}" />
+      <image class="icon" src="images/cancel.png" bind:tap="onDelete" />
     </view>
     <view class="cancel" bind:tap="onCancelSearch">取消</view>
   </view>
@@ -15,7 +15,7 @@
       </view>
       <view class="tags">
         <block wx:for="{{historyWords}}" wx:key="{{index}}">
-          <v-tag text="{{item}}"  bind:tapping="onConfirm"/>
+          <v-tag text="{{item}}" bind:tapping="onConfirm" />
         </block>
       </view>
     </view>
@@ -26,15 +26,18 @@
       </view>
       <view class="tags">
         <block wx:for="{{hotWords}}" wx:key="{{index}}">
-          <v-tag text="{{item}}"  bind:tapping="onConfirm"/>
+          <v-tag text="{{item}}" bind:tapping="onConfirm" />
         </block>
       </view>
     </view>
   </view>
   <!-- 搜索结果 -->
   <view wx:if="{{searching}}" class="books-container">
-    <block wx:for="{{books}}" wx:key="{{item.id}}">
+    <block wx:for="{{dataArray}}" wx:key="{{item.id}}">
       <v-book book="{{item}}" />
     </block>
   </view>
+  <v-loading class="loading-center" wx:if="{{loadingCenter}}" />
+  <v-loading class="loading" wx:if="{{loading}}" />
+  <text class="empty-tip" wx:if="{{noResult}}">没有搜索到书籍</text>
 </view>
