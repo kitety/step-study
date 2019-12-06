@@ -27,7 +27,6 @@ Component({
     q: '',
     total: 0,
     loadingCenter: false,
-    loading: false
   },
   attached () {
     const historyWords = keyWordModel.getHistory()
@@ -67,19 +66,18 @@ Component({
       })
     },
     loadMore () {
-      const { loading, q, } = this.data
-      if (!this.hasMore() || q === '' || loading) {
+      const { q, } = this.data
+      if (!this.hasMore() || q === '' || this.isLocked()) {
         return
       }
-      this.setData({ loading: true })
+      this.locked()
       bookModel.search(q, this.getCurrentStart()).then((result) => {
         const { books } = result
         keyWordModel.addToHistory(q)
         this.setMoreData(books)
-        this.setData({ loading: false })
       }).finally(() => {
         // 避免死锁
-        this.setData({ loading: false })
+        this.unLocked()
       })
     }
     // this.data.loading=false也可以，因为html里面没有用。可以不用setData

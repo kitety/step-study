@@ -56,8 +56,8 @@
 			"list": [
 				{
 					"id": 0,
-					"name": "pages/bookdetail/index",
-					"pathName": "pages/bookdetail/index",
+					"name": "pages/my/index",
+					"pathName": "pages/my/index",
 					"query": "bookid=7",
 					"scene": null
 				}

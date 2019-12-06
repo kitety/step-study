@@ -5,14 +5,44 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    userInfo: null,
+    userGlobalInfo: null,
+    authorized: false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    // 弹窗
+    this.userAuthorized()
 
+  },
+  userAuthorized () {
+    wx.getSetting({
+      success: (data) => {
+        if (data.authSetting['scope.userInfo']) {
+          // 用户授权了调用这个函数才有信息
+          wx.getUserInfo({
+            success: (result) => {
+              console.log(result);
+              this.setData({
+                userInfo: result.userInfo,
+                userGlobalInfo: result,
+                authorized: true
+              })
+            },
+            fail: () => {
+              console.log('没授权');
+            },
+            complete: () => { }
+          });
+        } else {
+          console.log('未授权');
+
+        }
+      }
+    })
   },
 
   /**
@@ -62,5 +92,13 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  onGetUserInfo (e) {
+    console.log(e);
+    this.setData({
+      userGlobalInfo: e.detail,
+      userInfo: e.detail.userInfo,
+      authorized: true
+    })
   }
 })
