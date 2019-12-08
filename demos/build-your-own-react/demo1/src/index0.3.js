@@ -1,4 +1,4 @@
-import Didact, { useState } from './old/render'
+import Didact from './old/render'
 // /** @jsx Didact.createElement */
 // const container = document.getElementById("root")
 const updateValue = e => {
@@ -21,14 +21,9 @@ const rerender = value => {
 
 
 /** @jsx Didact.createElement */
-function Counter () {
-  const [state, setState] = Didact.useState(1)
-  return (
-    <h1 onClick={() => setState(c => Math.random())}>
-      Count: {state}
-    </h1>
-  )
+function App (props) {
+  return <h1>Hi {props.name}</h1>
 }
-const element = <Counter />
+const element = <App name="f2121212oo" style={{color:'red'}}/>
 const container = document.getElementById("root")
 Didact.render(element, container)
