@@ -1,4 +1,8 @@
 // pages/my/index.js
+import { BookModel } from '../../models/book'
+const bookModel = new BookModel() 
+import { ClassicModel } from '../../models/classic.js'
+let classicModel = new ClassicModel()
 Page({
 
   /**
@@ -7,7 +11,9 @@ Page({
   data: {
     userInfo: null,
     userGlobalInfo: null,
-    authorized: false
+    authorized: false,
+    bookCount: 0,
+    classics:[]
   },
 
   /**
@@ -16,7 +22,13 @@ Page({
   onLoad: function (options) {
     // 弹窗
     this.userAuthorized()
-
+    this.getMyBookCount()
+    this.getMyFavor()
+  },
+  getMyFavor(){
+    classicModel.getMyFavor(res=>{
+      this.setData({ classics: res})
+    })
   },
   userAuthorized () {
     wx.getSetting({
@@ -94,11 +106,15 @@ Page({
 
   },
   onGetUserInfo (e) {
-    console.log(e);
     this.setData({
       userGlobalInfo: e.detail,
       userInfo: e.detail.userInfo,
       authorized: true
+    })
+  },
+  getMyBookCount () {
+    bookModel.getMyBookCount().then((result) => {
+      this.setData({ bookCount: result.count })
     })
   }
 })
