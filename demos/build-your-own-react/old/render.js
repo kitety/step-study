@@ -3,7 +3,7 @@ let nextUnitOfWork = null;
  *
  * @param {*} deadline 可以获取当前空闲时间以及回调是否在超时时间前已经执行的状态，我们可以用它来检查在浏览器需要再次控制之前我们还有多少时间
  */
-function workLoop(deadline) {
+function workLoop (deadline) {
   let shouldYield = false;
   while (nextUnitOfWork && !shouldYield) {
     nextUnitOfWork = performUnitOfWork(nextUnitOfWork);
@@ -23,7 +23,7 @@ requestIdleCallback(workLoop);
  * 执行工作并且返回下一个工作单元
  * @param {*} fiber=nextUnitOfWork
  */
-function performUnitOfWork(fiber) {
+function performUnitOfWork (fiber) {
   // add dom node
   if (!fiber.dom) {
     fiber.dom = createDom(fiber);
@@ -51,7 +51,7 @@ function performUnitOfWork(fiber) {
     nextFiber = nextFiber.parent;
   }
 }
-function reconcileChildren(wipFiber, elements) {
+function reconcileChildren (wipFiber, elements) {
   let index = 0;
   let oldFiber = wipFiber.alternate && wipFiber.alternate.child;
   let prevSibling = null;
@@ -69,13 +69,32 @@ function reconcileChildren(wipFiber, elements) {
     const sameType = oldFiber && element && element.type == oldFiber.type;
     if (sameType) {
       // update the node
-      // 一样的type，我们创建一个新的fiber
+      // 一样的type，我们创建一个新的fiber节点，以使dom节点与旧fiber保持一致，而props与元素保持一致
+      newFiber = {
+        type: oldFiber.type,
+        props: element.props,
+        dom: oldFiber.props,
+        parent: wipFiber,
+        alternate: oldFiber,
+        effectTag: 'UPDATE' // 在commit阶段会使用到
+      }
     }
     if (element && !sameType) {
       // add this type
+      newFiber = {
+        type: element.type,
+        props: element.props,
+        dom: null,
+        parent: wipFiber,
+        alternate: null,
+        effectTag: 'PLACEMENT' // 在commit阶段会使用到
+      }
     }
     if (oldFiber && !sameType) {
       // delete the oldFiber's node
+      // 我们没有新的fiber，所以我们添加了effectTag到旧fiber。
+      oldFiber.effectTag = 'DELETION'
+      deleteions.push(oldFiber)
     }
 
     const newFiber = {
@@ -128,7 +147,7 @@ function reconcileChildren(wipFiber, elements) {
  */
 
 // 以前的render
-function createDom(fiber) {
+function createDom (fiber) {
   // 对dom类型兼容
   const dom =
     fiber.type === "TEXT_ELEMENT"
@@ -143,7 +162,7 @@ function createDom(fiber) {
     });
   return dom;
 }
-function render(element, container) {
+function render (element, container) {
   // TODO next unit
   // 跟踪根fiber节点，work in progress root or wipRoot.
   wipRoot = {
@@ -154,28 +173,70 @@ function render(element, container) {
     //  old fiber的链接，旧fiber是我们在上一个提交阶段提交给dom的fiber。
     alternate: currentRoot
   };
+  // 添加一个数组来记录需要删除的fiber
+  deleteions = []
   nextUnitOfWork = wipRoot;
 }
 // 没有下一个工作单元,就是完成了工作了，因此我们需要将fiber commit to dom
-function commitRoot() {
-  // TODO add nodes to dom
+function commitRoot () {
+  // 对删除的fiber节点进行commit
+  deletions.forEach(commitWork)
+  //  add nodes to dom
   commitWork(wipRoot.child);
   currentRoot = wipRoot;
   wipRoot = null;
 }
 // 节点递归到dom
-function commitWork(fiber) {
+function commitWork (fiber) {
   if (!fiber) {
     return;
   }
   const domParent = fiber.parent.dom;
-  domParent.appendChild(fiber.dom);
+  // 让我们更改commitWork函数来处理新的effectTags。
+  if (fiber.effectTag === 'PLACEMENT' && fiber.dom) {
+    domParent.appendChild(fiber.dom);
+  }
+  else if (fiber.effectTag === 'UPDATE' && fiber.dom) {
+    // 更新已经存在的dom
+    updateDom(fiber.dom, fiber.alternate.props, fiber.props)
+  } else if (fiber.effectTag === 'DELETION') {
+    domParent.removeChild(fiber.dom)
+  }
   commitWork(fiber.child);
   commitWork(fiber.sibling);
+}
+// updateDom
+/**
+ * 比较新旧fiber上面的props，删除要去掉的props，并且设置新的或者改变的
+ */
+
+// 时间监听器，以“on”前缀开头
+const isEvent = key => key.startsWith('on')
+const isProperty = key => (key !== 'children') && (!isEvent(key))
+const isNew = (prev, next) => key => prev[key] !== next[key]
+const isGone = (prev, next) => key => !(key in next)
+function updateDom (dom, prevProps, nextProps) {
+  // TODO
+  // 删除旧的事件
+  Object.keys(prevProps).filter(isEvent).filter(key => !(key in nextProps) || isNew(prevProps, nextProps)(key)).filter(name => {
+    const eventType = name.toLowerCase().substring(2)
+    dom.removeEventListener(eventType, prevProps[name])
+  })
+  // 添加/更新新事件
+  Object.keys(prevProps).filter(isEvent).filter(key => isNew(prevProps, nextProps)[key]).filter(name => {
+    const eventType = name.toLowerCase().substring(2)
+    dom.addEventListener(eventType, prevProps[name])
+  })
+  // 删除旧的属性
+  Object.keys(prevProps).filter(isProperty).filter(isGone(prevProps, nextProps)).forEach(name => dom[name] = '')
+  // 设置新的或者改变了的
+  Object.keys(prevProps).filter(isProperty).filter(isNew(prevProps, nextProps)).forEach(name => dom[name] = nextProps[name])
+
 }
 
 let nextUnitOfWork = null;
 let wipRoot = null;
+let deleteions = null;
 // commit时的保存
 let currentRoot = null;
 // 更新和删除的完善
