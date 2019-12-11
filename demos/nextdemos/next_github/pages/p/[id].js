@@ -9,15 +9,12 @@ export default () => {
       <div className="markdown">
         <Markdown
           source={`
-# Open-rest
+            # Open-rest
 
-Standard restful api server, Base on restify and sequelize
+            Standard restful api server, Base on restify and sequelize
 
-[![Build status](https://api.travis-ci.org/open-node/open-rest.svg?branch=master)](https://travis-ci.org/open-node/open-rest)
-[![codecov](https://codecov.io/gh/open-node/open-rest/branch/master/graph/badge.svg)](https://codecov.io/gh/open-node/open-rest)
-
-## Node version
-<pre> >= 6 </pre>
+            ## Node version
+            <pre> >= 6 </pre>
       `}
         />
       </div>
