@@ -254,7 +254,7 @@ socket.on('connect,.callback)
 - write表示向服务器写入数据
 - end 用于结束连接
 - error 连接发生错误
-- destroy 销毁流
+- **destroy** 销毁流
 - close 表示连接关闭成功，hasError=true代表有可能有错误
 ```js
 //在 socket 上发送数据。第二个参数制定了字符串的编码 - 默认是 UTF8 编码。
