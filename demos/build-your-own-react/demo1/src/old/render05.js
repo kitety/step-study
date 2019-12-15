@@ -7,9 +7,11 @@ function workLoop(deadline) {
   let shouldYield = false;
   while (nextUnitOfWork && !shouldYield) {
     nextUnitOfWork = performUnitOfWork(nextUnitOfWork);
+    // 如果idle period已经结束，则它的值是0
     shouldYield = deadline.timeRemaining() < 1;
   }
   if (!nextUnitOfWork && wipRoot) {
+    // 没有进行中的root和美哟普下一个工作单元 就commit，进行添加dom的操作
     commitRoot();
   }
   requestIdleCallback(workLoop);
@@ -41,6 +43,7 @@ function performUnitOfWork(fiber) {
   let prevSibling = null;
   while (index < elements.length) {
     const element = elements[index];
+    // 遍历添加fiber
     const newFiber = {
       type: element.type,
       props: element.props,
@@ -49,6 +52,7 @@ function performUnitOfWork(fiber) {
     };
     // 将其设置为子代还是同级，具体取决于它是否是第一个子代。
     if (index === 0) {
+      // 往下一级
       fiber.child = newFiber;
     } else {
       prevSibling.sibling = newFiber;
@@ -147,4 +151,6 @@ function commitWork(fiber) {
 }
 
 let nextUnitOfWork = null;
+//  work in progress root
+// 进行中的fiber
 let wipRoot = null;

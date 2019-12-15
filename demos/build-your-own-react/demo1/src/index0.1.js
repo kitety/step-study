@@ -53,3 +53,13 @@ const element = (
 );
 const container = document.getElementById("root");
 Didact.render(element, container);
+
+
+
+/* 
+const element = React.createElement(
+  "div",
+  { id: "foo" },
+  React.createElement("a", null, "bar"),
+  React.createElement("b")
+) */

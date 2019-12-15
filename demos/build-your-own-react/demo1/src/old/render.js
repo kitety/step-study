@@ -27,9 +27,11 @@ function createElement (type, props, ...children) {
  * @param {*} deadline 可以获取当前空闲时间以及回调是否在超时时间前已经执行的状态，我们可以用它来检查在浏览器需要再次控制之前我们还有多少时间
  */
 function workLoop (deadline) {
+  // 应该避让
   let shouldYield = false;
   while (nextUnitOfWork && !shouldYield) {
     nextUnitOfWork = performUnitOfWork(nextUnitOfWork);
+    // timeRemaining它用来表示当前闲置周期的预估剩余毫秒数
     shouldYield = deadline.timeRemaining() < 1;
   }
   if (!nextUnitOfWork && wipRoot) {
@@ -112,7 +114,7 @@ function useState (initial) {
       alternate: currentRoot,
     }
     nextUnitOfWork = wipRoot
-    deleteions = []
+    deleteArr = []
   }
   wipFiber.hooks.push(hook)
   hookIndex++
@@ -128,6 +130,9 @@ function updateHostComponent (fiber) {
   }
   reconcileChildren(fiber, fiber.props.children);
 }
+// 分离代码创建新的fiber
+// 在这里，我们将旧fiber与新元素进行协调。
+// 我们同时遍历旧光纤的子级（wipFiber.alternate）和要协调的元素数组。
 function reconcileChildren (wipFiber, elements) {
   let index = 0;
   let oldFiber = wipFiber.alternate && wipFiber.alternate.child;
@@ -171,7 +176,7 @@ function reconcileChildren (wipFiber, elements) {
       // delete the oldFiber's node
       // 我们没有新的fiber，所以我们添加了effectTag到旧fiber。
       oldFiber.effectTag = 'DELETION'
-      deleteions.push(oldFiber)
+      deleteArr.push(oldFiber)
     }
 
     // newFiber = {
@@ -227,6 +232,7 @@ function reconcileChildren (wipFiber, elements) {
  */
 
 // 以前的render
+// 传入fiber，返回dom
 function createDom (fiber) {
   // 对dom类型兼容
   const dom =
@@ -248,6 +254,7 @@ function render (element, container) {
   // TODO next unit
   // 跟踪根fiber节点，work in progress root or wipRoot.
   wipRoot = {
+    // 以便追踪
     dom: container,
     props: {
       children: [element]
@@ -256,13 +263,14 @@ function render (element, container) {
     alternate: currentRoot
   };
   // 添加一个数组来记录需要删除的fiber
-  deleteions = []
+  deleteArr = []
+  // root biber tree
   nextUnitOfWork = wipRoot;
 }
 // 没有下一个工作单元,就是完成了工作了，因此我们需要将fiber commit to dom
 function commitRoot () {
   // 对删除的fiber节点进行commit
-  deleteions.forEach(commitWork)
+  deleteArr.forEach(commitWork)
   //  add nodes to dom
   commitWork(wipRoot.child);
   currentRoot = wipRoot;
@@ -274,6 +282,7 @@ function commitWork (fiber) {
     return;
   }
   // 函数式的com需要改变2个地方 -1
+  // 找到父元素
   let domParentFiber = fiber.parent
   while (!domParentFiber.dom) {
     domParentFiber = domParentFiber.parent
@@ -334,8 +343,10 @@ function updateDom (dom, prevProps, nextProps) {
 
 let nextUnitOfWork = null;
 let wipRoot = null;
-let deleteions = null;
+let deleteArr = null;
 // commit时的保存
+// last fiber tree we commited to the dom
+// 旧bifer的链接，上一阶段提交给dom的fiber
 let currentRoot = null;
 // 更新和删除的完善
 
