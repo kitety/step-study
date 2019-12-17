@@ -32,6 +32,25 @@ function createElement(type, props, ...children) {
     }
   };
 }
+function render(element, container) {
+  // TODO next unit
+  // 跟踪根fiber节点，work in progress root.
+  wipRoot = {
+    // 以便追踪
+    dom: container,
+    props: {
+      children: [element]
+    },
+    //  old fiber的链接，旧fiber是我们在上一个提交阶段提交的fiber。
+    alternate: prevCommitRoot
+  };
+  // 添加一个数组来记录需要删除的fiber
+  deleteArr = [];
+  // root biber tree
+  // 设置工作单元 idle时调用
+  nextUnitOfWork = wipRoot;
+  console.log("render--nextUnitOfWork", nextUnitOfWork);
+}
 
 /**
  *
@@ -152,7 +171,6 @@ function useState(initial) {
     deleteArr = [];
   };
   console.log("hookIndex", hookIndex);
-  console.info(wipFiber.hooks);
   wipFiber.hooks.push(hook);
   hookIndex++;
   // 返回状态和方法
@@ -270,45 +288,8 @@ function reconcileChildren(wipFiber, elements) {
  * 返回root 这意味着我们已经完成了渲染的所有工作
  */
 
-// 以前的render
-// 传入fiber，返回dom
-// 从render抽离出来的
-function createDom(fiber) {
-  // 对dom类型兼容
-  const dom =
-    fiber.type === "TEXT_ELEMENT"
-      ? document.createTextNode("")
-      : document.createElement(fiber.type);
-  // const isProperty = key => key !== "children";
 
-  updateDom(dom, {}, fiber.props);
-  // 把props的属性放到dom上
-  // Object.keys(fiber.props)
-  //   .filter(isProperty)
-  //   .forEach(name => {
-  //     dom[name] = fiber.props[name];
-  //   });
-  return dom;
-}
-function render(element, container) {
-  // TODO next unit
-  // 跟踪根fiber节点，work in progress root.
-  wipRoot = {
-    // 以便追踪
-    dom: container,
-    props: {
-      children: [element]
-    },
-    //  old fiber的链接，旧fiber是我们在上一个提交阶段提交的fiber。
-    alternate: prevCommitRoot
-  };
-  // 添加一个数组来记录需要删除的fiber
-  deleteArr = [];
-  // root biber tree
-  // 设置工作单元 idle时调用
-  nextUnitOfWork = wipRoot;
-  console.log("render--nextUnitOfWork", nextUnitOfWork);
-}
+
 // 没有下一个工作单元,就是完成了工作了，因此我们需要将fiber commit to dom
 function commitRoot() {
   // 对删除的fiber节点进行commit
@@ -319,8 +300,9 @@ function commitRoot() {
   wipRoot = null;
   // console.log("commitRoot--", nextUnitOfWork, wipRoot);
 }
-// 节*点递归到dom
+// 节点递归到dom
 function commitWork(fiber) {
+  console.log(fiber);
   // console.log("commitWork--fiber", fiber);
   if (!fiber) {
     return;
@@ -395,23 +377,11 @@ function updateDom(dom, prevProps, nextProps) {
     .forEach(name => (dom[name] = nextProps[name]));
 }
 
-
-
 const Didact = {
   createElement,
   render,
   useState
 };
-
-
-
-
-
-
-
-
-
-
 
 // /** @jsx Didact.createElement */
 // const container = document.getElementById("root");
