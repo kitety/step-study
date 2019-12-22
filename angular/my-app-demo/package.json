@@ -20,6 +20,8 @@
     "@angular/platform-browser-dynamic": "~8.2.14",
     "@angular/router": "~8.2.14",
     "rxjs": "~6.4.0",
+    "todomvc-app-css": "^2.3.0",
+    "todomvc-common": "^1.0.5",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"
   },
