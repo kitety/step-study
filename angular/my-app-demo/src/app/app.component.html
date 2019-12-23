@@ -23,7 +23,7 @@
       <ul class="todo-list">
         <!-- These are here just to show the structure of the list items -->
         <!-- List items should get the class `editing` when editing and `completed` when marked as completed -->
-        <li class="completed" *ngFor="let todo of todos"
+        <li class="completed" *ngFor="let todo of filterTodos"
           [ngClass]="{completed: todo.done,editing:currentEditing===todo}">
           <div class="view">
             <input class="toggle" type="checkbox" [(ngModel)]="todo.done">
@@ -43,17 +43,17 @@
       <!-- Remove this if you don't implement routing -->
       <ul class="filters">
         <li>
-          <a class="selected" href="#/">All</a>
+          <a href="#/" [ngClass]="{selected: visibility==='all'}">All</a>
         </li>
         <li>
-          <a href="#/active">Active</a>
+          <a href="#/active" [ngClass]="{selected: visibility==='active'}">Active</a>
         </li>
         <li>
-          <a href="#/completed">Completed</a>
+          <a href="#/completed" [ngClass]="{selected: visibility==='completed'}">Completed</a>
         </li>
       </ul>
       <!-- Hidden if no completed items are left ↓ -->
-      <button class="clear-completed">Clear completed</button>
+      <button class="clear-completed" (click)="clearAllDone()">Clear completed</button>
     </footer>
   </ng-template>
 

@@ -28,6 +28,17 @@ export class AppComponent {
     return this.todos.filter(t => !t.done).length
   }
   public todos: typeof todos = todos
+  // public filterTodos: typeof todos = []
+  public visibility = 'all'
+  get filterTodos() {
+    if (this.visibility.indexOf('active') > -1) {
+      return this.todos.filter(t => !t.done)
+    } else if (this.visibility.indexOf('completed') > -1) {
+      return this.todos.filter(t => t.done)
+    } else {
+      return this.todos
+    }
+  }
   public currentEditing: {
     id: number;
     title: string;
@@ -69,5 +80,47 @@ export class AppComponent {
       target.value = this.currentEditing.title
       this.currentEditing = null
     }
+  }
+  /**
+   * clearAllDone
+   */
+  public clearAllDone() {
+    this.todos = this.todos.filter(todo => !todo.done)
+  }
+  /**
+   * hashChangeHandle
+   */
+  public hashChangeHandle() {
+    let hash = location.hash.substr(1)
+    switch (hash) {
+      case '/':
+        this.visibility = 'all'
+        break;
+      case '/active':
+        this.visibility = 'active'
+        break;
+      case '/completed':
+        this.visibility = 'completed'
+        break;
+
+      default:
+        this.visibility = 'all'
+        break;
+    }
+  }
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.hashChangeHandle()
+    // 注意this
+    window.onhashchange = this.hashChangeHandle.bind(this)
+  }
+  // 数据改变
+  // 函数里面持久化数据
+  ngDoCheck(): void {
+    //Called every time that the input properties of a component or a directive are checked. Use it to extend change detection by performing a custom check.
+    //Add 'implements DoCheck' to the class.
+    console.log(1);
+
   }
 }
