@@ -27,7 +27,8 @@ export class AppComponent {
   get undosLen() {
     return this.todos.filter(t => !t.done).length
   }
-  public todos: typeof todos = todos
+  public todos: typeof todos = JSON.parse(window.localStorage.getItem('todos')) || []
+  // public todos: typeof todos =[]
   // public filterTodos: typeof todos = []
   public visibility = 'all'
   get filterTodos() {
@@ -120,7 +121,6 @@ export class AppComponent {
   ngDoCheck(): void {
     //Called every time that the input properties of a component or a directive are checked. Use it to extend change detection by performing a custom check.
     //Add 'implements DoCheck' to the class.
-    console.log(1);
-
+    window.localStorage.setItem('todos', JSON.stringify(this.todos))
   }
 }
