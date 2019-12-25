@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-// 管理页面的模块
-
+import { ShareModule } from '../share/share.module';
 
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule
+    // 每个页面都可以用到share module的模块
+    ShareModule
   ]
 })
 export class PagesModule { }
