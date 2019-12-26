@@ -1,1 +1,13 @@
-<p>home works!</p>
+<div class="home">
+  <app-wy-carousel #wyCarousel>
+    <div class="carousel wrap">
+      <nz-carousel nzAutoPlay nzEffect="fade" [nzDotRender]="wyCarousel.dotRef">
+        <div class="carousel-item" nz-carousel-content *ngFor="let item of banners">
+          <a [href]="item.url" class="banner-item" target="_blank">
+            <img [src]="item.imageUrl" />
+          </a>
+        </div>
+      </nz-carousel>
+    </div>
+  </app-wy-carousel>
+</div>
