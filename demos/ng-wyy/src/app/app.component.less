@@ -1,14 +1,16 @@
-@import '../assets/styles/varibles';
-@import '../assets/styles/mixins';
-#app .layout{
+@import "../assets/styles/varibles";
+@import "../assets/styles/mixins";
+#app .layout {
   .header {
-    .wrap{
+    display: flex;
+    justify-content: center;
+    .wrap {
       display: flex;
       justify-content: space-between;
       width: 1100px;
-      .left{
+      .left {
         display: flex;
-        h1{
+        h1 {
           width: 157px;
           color: @border-color-base;
           font-size: @font-size-lgx;
@@ -16,14 +18,14 @@
           margin-right: 20px;
           text-align: center;
         }
-        ul{
-          height:64px;
-          line-height:64px;
+        ul {
+          height: 64px;
+          line-height: 64px;
         }
       }
-      .right{
+      .right {
         display: flex;
-        .member{
+        .member {
           display: flex;
           align-items: center;
           color: @white-color;
@@ -31,14 +33,13 @@
       }
     }
   }
-  .content{
+  .content {
     background-color: @body-color;
   }
-  .footer{
+  .footer {
     text-align: center;
   }
 }
-
 
 :host ::ng-deep .ant-back-top {
   bottom: 80px;

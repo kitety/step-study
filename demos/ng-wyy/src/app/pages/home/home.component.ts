@@ -1,10 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { HomeService } from 'src/app/services/home.service';
 import { NzCarouselComponent } from 'ng-zorro-antd';
-import { SingerService } from 'src/app/services/singer.service';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/internal/operators'
 import { Banner, SongSheet, HotTag, Singer } from 'src/app/services/data-types/common.types';
+import { SheetService } from 'src/app/services/sheet.service';
 
 
 
@@ -23,7 +22,8 @@ export class HomeComponent implements OnInit {
   // 轮播组件实例
   @ViewChild(NzCarouselComponent, { static: true }) private nzCarousel: NzCarouselComponent
   constructor(
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private sheetServe: SheetService
   ) {
     this.route.data.pipe(map(res => res.homeDatas)).subscribe(([banners, hotTags, songSheetList, singers]) => {
       this.banners = banners
@@ -40,6 +40,12 @@ export class HomeComponent implements OnInit {
   }
   onChangeSlide(type: 'pre' | 'next') {
     this.nzCarousel[type]()
+  }
+  onPlaySheet(id: number) {
+    console.log('id', id)
+    this.sheetServe.playSheet(id).subscribe(res => {
+      console.log(res)
+    })
   }
 
 }
