@@ -24,11 +24,12 @@ export class SongService {
   getSongList(songs: Song | Song[]): Observable<Song[]> {
     const songArr = Array.isArray(songs) ? songs.slice() : [songs]
     const ids = songArr.map(item => item.id).join(',')
-    return Observable.create(observable => {
-      this.getSongUrl(ids).subscribe(urls => {
-        observable.next(this.gennerateSongList(songArr, urls))
-      })
-    })
+    return this.getSongUrl(ids).pipe(map(urls => this.gennerateSongList(songArr, urls)))
+    /* return Observable.create(observable => {
+       this.getSongUrl(ids).subscribe(urls => {
+         observable.next(this.gennerateSongList(songArr, urls))
+       })
+     }) */
   }
   // 负责拼接
   private gennerateSongList(songs: Song[], urls: SongUrl[]): Song[] {
