@@ -1,0 +1,510 @@
+
+{
+  "header": {
+    "reportVersion": 1,
+    "event": "Allocation failed - JavaScript heap out of memory",
+    "trigger": "FatalError",
+    "filename": "report.20200109.102012.12212.0.001.json",
+    "dumpEventTime": "2020-01-09T10:20:12Z",
+    "dumpEventTimeStamp": "1578536412296",
+    "processId": 12212,
+    "cwd": "C:\\Users\\kitety\\Desktop\\code\\step-study\\demos\\ng-wyy",
+    "commandLine": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\kitety\\Desktop\\code\\step-study\\demos\\ng-wyy\\node_modules\\jest-worker\\build\\workers\\processChild.js"
+    ],
+    "nodejsVersion": "v13.0.1",
+    "wordSize": 64,
+    "arch": "x64",
+    "platform": "win32",
+    "componentVersions": {
+      "node": "13.0.1",
+      "v8": "7.8.279.17-node.14",
+      "uv": "1.33.1",
+      "zlib": "1.2.11",
+      "brotli": "1.0.7",
+      "ares": "1.15.0",
+      "modules": "79",
+      "nghttp2": "1.39.2",
+      "napi": "5",
+      "llhttp": "1.1.4",
+      "openssl": "1.1.1d",
+      "cldr": "35.1",
+      "icu": "64.2",
+      "tz": "2019a",
+      "unicode": "12.1"
+    },
+    "release": {
+      "name": "node",
+      "headersUrl": "https://nodejs.org/download/release/v13.0.1/node-v13.0.1-headers.tar.gz",
+      "sourceUrl": "https://nodejs.org/download/release/v13.0.1/node-v13.0.1.tar.gz",
+      "libUrl": "https://nodejs.org/download/release/v13.0.1/win-x64/node.lib"
+    },
+    "osName": "Windows_NT",
+    "osRelease": "10.0.18363",
+    "osVersion": "Windows 10 Home China",
+    "osMachine": "x86_64",
+    "cpus": [
+      {
+        "model": "Intel(R) Core(TM) i7-8850H CPU @ 2.60GHz",
+        "speed": 2592,
+        "user": 7932265,
+        "nice": 0,
+        "sys": 12093609,
+        "idle": 105623921,
+        "irq": 3362171
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-8850H CPU @ 2.60GHz",
+        "speed": 2592,
+        "user": 5204234,
+        "nice": 0,
+        "sys": 7758687,
+        "idle": 112686578,
+        "irq": 377796
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-8850H CPU @ 2.60GHz",
+        "speed": 2592,
+        "user": 18072062,
+        "nice": 0,
+        "sys": 10722937,
+        "idle": 96854500,
+        "irq": 102375
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-8850H CPU @ 2.60GHz",
+        "speed": 2592,
+        "user": 9759968,
+        "nice": 0,
+        "sys": 6256812,
+        "idle": 109632718,
+        "irq": 59125
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-8850H CPU @ 2.60GHz",
+        "speed": 2592,
+        "user": 14643671,
+        "nice": 0,
+        "sys": 10237625,
+        "idle": 100768203,
+        "irq": 86312
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-8850H CPU @ 2.60GHz",
+        "speed": 2592,
+        "user": 7767468,
+        "nice": 0,
+        "sys": 5103890,
+        "idle": 112778140,
+        "irq": 50312
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-8850H CPU @ 2.60GHz",
+        "speed": 2592,
+        "user": 12996281,
+        "nice": 0,
+        "sys": 8391234,
+        "idle": 104261984,
+        "irq": 78875
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-8850H CPU @ 2.60GHz",
+        "speed": 2592,
+        "user": 7799968,
+        "nice": 0,
+        "sys": 4668390,
+        "idle": 113181140,
+        "irq": 39015
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-8850H CPU @ 2.60GHz",
+        "speed": 2592,
+        "user": 9965296,
+        "nice": 0,
+        "sys": 8706437,
+        "idle": 106977750,
+        "irq": 96171
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-8850H CPU @ 2.60GHz",
+        "speed": 2592,
+        "user": 6607062,
+        "nice": 0,
+        "sys": 4649937,
+        "idle": 114392468,
+        "irq": 64484
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-8850H CPU @ 2.60GHz",
+        "speed": 2592,
+        "user": 9768609,
+        "nice": 0,
+        "sys": 8524781,
+        "idle": 107356078,
+        "irq": 85140
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-8850H CPU @ 2.60GHz",
+        "speed": 2592,
+        "user": 6473203,
+        "nice": 0,
+        "sys": 4796109,
+        "idle": 114380156,
+        "irq": 39718
+      }
+    ],
+    "networkInterfaces": [
+      {
+        "name": "WLAN",
+        "internal": false,
+        "mac": "3c:f0:11:b7:8f:ea",
+        "address": "fe80::8991:658a:6aea:db5b",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 12
+      },
+      {
+        "name": "WLAN",
+        "internal": false,
+        "mac": "3c:f0:11:b7:8f:ea",
+        "address": "10.23.101.191",
+        "netmask": "255.255.255.0",
+        "family": "IPv4"
+      },
+      {
+        "name": "Loopback Pseudo-Interface 1",
+        "internal": true,
+        "mac": "00:00:00:00:00:00",
+        "address": "::1",
+        "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+        "family": "IPv6",
+        "scopeid": 0
+      },
+      {
+        "name": "Loopback Pseudo-Interface 1",
+        "internal": true,
+        "mac": "00:00:00:00:00:00",
+        "address": "127.0.0.1",
+        "netmask": "255.0.0.0",
+        "family": "IPv4"
+      }
+    ],
+    "host": "DESKTOP-2LO9G63"
+  },
+  "javascriptStack": {
+    "message": "No stack.",
+    "stack": [
+      "Unavailable."
+    ]
+  },
+  "nativeStack": [
+    {
+      "pc": "0x00007ff6c90d1119",
+      "symbol": "std::basic_ostream<char,std::char_traits<char> >::operator<<+10857"
+    },
+    {
+      "pc": "0x00007ff6c90d548c",
+      "symbol": "std::basic_ostream<char,std::char_traits<char> >::operator<<+28124"
+    },
+    {
+      "pc": "0x00007ff6c90d4448",
+      "symbol": "std::basic_ostream<char,std::char_traits<char> >::operator<<+23960"
+    },
+    {
+      "pc": "0x00007ff6c91bfb9b",
+      "symbol": "v8::base::CPU::has_sse+38539"
+    },
+    {
+      "pc": "0x00007ff6c99d5b5e",
+      "symbol": "v8::Isolate::ReportExternalAllocationLimitReached+94"
+    },
+    {
+      "pc": "0x00007ff6c99be181",
+      "symbol": "v8::SharedArrayBuffer::Externalize+833"
+    },
+    {
+      "pc": "0x00007ff6c9889bfc",
+      "symbol": "v8::internal::Heap::EphemeronKeyWriteBarrierFromCode+1436"
+    },
+    {
+      "pc": "0x00007ff6c9894e50",
+      "symbol": "v8::internal::Heap::ProtectUnprotectedMemoryChunks+1312"
+    },
+    {
+      "pc": "0x00007ff6c9891974",
+      "symbol": "v8::internal::Heap::PageFlagsAreConsistent+3204"
+    },
+    {
+      "pc": "0x00007ff6c9887183",
+      "symbol": "v8::internal::Heap::CollectGarbage+1283"
+    },
+    {
+      "pc": "0x00007ff6c98857f4",
+      "symbol": "v8::internal::Heap::AddRetainedMap+2452"
+    },
+    {
+      "pc": "0x00007ff6c98a6a8d",
+      "symbol": "v8::internal::Factory::NewFillerObject+61"
+    },
+    {
+      "pc": "0x00007ff6c960b6a1",
+      "symbol": "v8::internal::interpreter::JumpTableTargetOffsets::iterator::operator=+1681"
+    },
+    {
+      "pc": "0x00007ff6c9e18d2d",
+      "symbol": "v8::internal::SetupIsolateDelegate::SetupHeap+544781"
+    },
+    {
+      "pc": "0x0000036386175ef5",
+      "symbol": ""
+    }
+  ],
+  "javascriptHeap": {
+    "totalMemory": 2151686144,
+    "totalCommittedMemory": 2151686144,
+    "usedMemory": 2139219136,
+    "availableMemory": 48035952,
+    "memoryLimit": 2197815296,
+    "heapSpaces": {
+      "read_only_space": {
+        "memorySize": 262144,
+        "committedMemory": 262144,
+        "capacity": 32808,
+        "used": 32808,
+        "available": 0
+      },
+      "new_space": {
+        "memorySize": 2097152,
+        "committedMemory": 2097152,
+        "capacity": 1047456,
+        "used": 188112,
+        "available": 859344
+      },
+      "old_space": {
+        "memorySize": 2003415040,
+        "committedMemory": 2003415040,
+        "capacity": 1993928504,
+        "used": 1993928504,
+        "available": 0
+      },
+      "code_space": {
+        "memorySize": 1740800,
+        "committedMemory": 1740800,
+        "capacity": 1460544,
+        "used": 1460544,
+        "available": 0
+      },
+      "map_space": {
+        "memorySize": 1314816,
+        "committedMemory": 1314816,
+        "capacity": 920000,
+        "used": 920000,
+        "available": 0
+      },
+      "large_object_space": {
+        "memorySize": 142807040,
+        "committedMemory": 142807040,
+        "capacity": 142686384,
+        "used": 142686384,
+        "available": 0
+      },
+      "code_large_object_space": {
+        "memorySize": 49152,
+        "committedMemory": 49152,
+        "capacity": 2784,
+        "used": 2784,
+        "available": 0
+      },
+      "new_large_object_space": {
+        "memorySize": 0,
+        "committedMemory": 0,
+        "capacity": 1047456,
+        "used": 0,
+        "available": 1047456
+      }
+    }
+  },
+  "resourceUsage": {
+    "userCpuSeconds": 162.671,
+    "kernelCpuSeconds": 4.437,
+    "cpuConsumptionPercent": 219.879,
+    "maxRss": 2295824384,
+    "pageFaults": {
+      "IORequired": 1377455,
+      "IONotRequired": 0
+    },
+    "fsActivity": {
+      "reads": 901,
+      "writes": 110
+    }
+  },
+  "libuv": [
+  ],
+  "environmentVariables": {
+    "ALLUSERSPROFILE": "C:\\ProgramData",
+    "APPDATA": "C:\\Users\\kitety\\AppData\\Roaming",
+    "ChocolateyInstall": "C:\\ProgramData\\chocolatey",
+    "ChocolateyLastPathUpdate": "132158374217279163",
+    "COLORTERM": "truecolor",
+    "CommonProgramFiles": "C:\\Program Files\\Common Files",
+    "CommonProgramFiles(x86)": "C:\\Program Files (x86)\\Common Files",
+    "CommonProgramW6432": "C:\\Program Files\\Common Files",
+    "COMPUTERNAME": "DESKTOP-2LO9G63",
+    "ComSpec": "C:\\WINDOWS\\system32\\cmd.exe",
+    "DriverData": "C:\\Windows\\System32\\Drivers\\DriverData",
+    "FORCE_COLOR": "1",
+    "GOPATH": "C:\\Users\\kitety\\Desktop\\code\\work\\go",
+    "HOME": "C:\\Users\\kitety",
+    "HOMEDRIVE": "C:",
+    "HOMEPATH": "\\Users\\kitety",
+    "INIT_CWD": "C:\\Users\\kitety\\Desktop\\code\\step-study\\demos\\ng-wyy",
+    "JEST_WORKER_ID": "1",
+    "LANG": "zh_CN.UTF-8",
+    "LOCALAPPDATA": "C:\\Users\\kitety\\AppData\\Local",
+    "LOGONSERVER": "\\\\DESKTOP-2LO9G63",
+    "MOZ_PLUGIN_PATH": "C:\\Program Files (x86)\\Foxit Software\\Foxit Reader\\plugins\\",
+    "NODE": "C:\\Program Files\\nodejs\\node.exe",
+    "npm_config_argv": "{\"remain\":[],\"cooked\":[\"run\",\"build\"],\"original\":[\"build\"]}",
+    "npm_config_bin_links": "true",
+    "npm_config_home": "https://npm.taobao.org",
+    "npm_config_ignore_optional": "",
+    "npm_config_ignore_scripts": "",
+    "npm_config_init_license": "MIT",
+    "npm_config_init_version": "1.0.0",
+    "npm_config_registry": "http://r.npm.xiaoduoai.com/",
+    "npm_config_save_prefix": "^",
+    "npm_config_strict_ssl": "true",
+    "npm_config_user_agent": "yarn/1.17.3 npm/? node/v13.0.1 win32 x64",
+    "npm_config_version_commit_hooks": "true",
+    "npm_config_version_git_message": "v%s",
+    "npm_config_version_git_sign": "",
+    "npm_config_version_git_tag": "true",
+    "npm_config_version_tag_prefix": "v",
+    "npm_execpath": "C:\\Program Files (x86)\\Yarn\\bin\\yarn.js",
+    "npm_lifecycle_event": "build",
+    "npm_lifecycle_script": "ng build",
+    "npm_node_execpath": "C:\\Program Files\\nodejs\\node.exe",
+    "npm_package_dependencies_minireset_css": "0.0.6",
+    "npm_package_dependencies_ng_zorro_antd": "^8.5.2",
+    "npm_package_dependencies_rxjs": "~6.4.0",
+    "npm_package_dependencies_tslib": "^1.10.0",
+    "npm_package_dependencies_zone_js": "~0.9.1",
+    "npm_package_dependencies__angular_animations": "~8.2.14",
+    "npm_package_dependencies__angular_common": "~8.2.14",
+    "npm_package_dependencies__angular_compiler": "~8.2.14",
+    "npm_package_dependencies__angular_core": "~8.2.14",
+    "npm_package_dependencies__angular_forms": "~8.2.14",
+    "npm_package_dependencies__angular_platform_browser": "~8.2.14",
+    "npm_package_dependencies__angular_platform_browser_dynamic": "~8.2.14",
+    "npm_package_dependencies__angular_router": "~8.2.14",
+    "npm_package_description": "This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.21.",
+    "npm_package_devDependencies_codelyzer": "^5.0.0",
+    "npm_package_devDependencies_jasmine_core": "~3.4.0",
+    "npm_package_devDependencies_jasmine_spec_reporter": "~4.2.1",
+    "npm_package_devDependencies_karma": "~4.1.0",
+    "npm_package_devDependencies_karma_chrome_launcher": "~2.2.0",
+    "npm_package_devDependencies_karma_coverage_istanbul_reporter": "~2.0.1",
+    "npm_package_devDependencies_karma_jasmine": "~2.0.1",
+    "npm_package_devDependencies_karma_jasmine_html_reporter": "^1.4.0",
+    "npm_package_devDependencies_protractor": "~5.4.0",
+    "npm_package_devDependencies_tslint": "~5.15.0",
+    "npm_package_devDependencies_ts_node": "~7.0.0",
+    "npm_package_devDependencies_typescript": "~3.5.3",
+    "npm_package_devDependencies__angular_cli": "~8.3.21",
+    "npm_package_devDependencies__angular_compiler_cli": "~8.2.14",
+    "npm_package_devDependencies__angular_devkit_build_angular": "~0.803.21",
+    "npm_package_devDependencies__angular_language_service": "~8.2.14",
+    "npm_package_devDependencies__types_jasmine": "~3.3.8",
+    "npm_package_devDependencies__types_jasminewd2": "~2.0.3",
+    "npm_package_devDependencies__types_node": "~8.9.4",
+    "npm_package_name": "ng-wyy",
+    "npm_package_private": "true",
+    "npm_package_readmeFilename": "README.md",
+    "npm_package_scripts_build": "ng build",
+    "npm_package_scripts_e2e": "ng e2e",
+    "npm_package_scripts_lint": "ng lint",
+    "npm_package_scripts_ng": "ng",
+    "npm_package_scripts_start": "ng serve",
+    "npm_package_scripts_test": "ng test",
+    "npm_package_version": "0.0.0",
+    "NUMBER_OF_PROCESSORS": "12",
+    "OneDrive": "C:\\Users\\kitety\\OneDrive",
+    "OneDriveConsumer": "C:\\Users\\kitety\\OneDrive",
+    "OS": "Windows_NT",
+    "Path": "C:\\Users\\kitety\\AppData\\Local\\Temp\\yarn--1578536036479-0.41384498085375854;C:\\Users\\kitety\\Desktop\\code\\step-study\\demos\\ng-wyy\\node_modules\\.bin;C:\\Users\\kitety\\AppData\\Local\\Yarn\\Data\\link\\node_modules\\.bin;C:\\Program Files\\libexec\\lib\\node_modules\\npm\\bin\\node-gyp-bin;C:\\Program Files\\lib\\node_modules\\npm\\bin\\node-gyp-bin;C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\node-gyp-bin;C:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\iCLS\\;C:\\Program Files\\Intel\\Intel(R) Management Engine Components\\iCLS\\;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\DAL;C:\\Program Files\\Intel\\Intel(R) Management Engine Components\\DAL;C:\\Program Files\\Intel\\WiFi\\bin\\;C:\\Program Files\\Common Files\\Intel\\WirelessCommon\\;C:\\Program Files\\Git\\cmd;C:\\Program Files (x86)\\Yarn\\bin\\;C:\\favorite\\cmder;C:\\Program Files\\TortoiseGit\\bin;C:\\ProgramData\\chocolatey\\bin;C:\\Program Files\\nodejs\\;C:\\Program Files\\PuTTY\\;C:\\Go\\bin;C:\\Users\\kitety\\scoop\\shims;C:\\Users\\kitety\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Program Files\\Bandizip\\;C:\\Users\\kitety\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Users\\kitety\\AppData\\Local\\Yarn\\bin;C:\\Program Files\\JetBrains\\WebStorm 2019.1\\bin;C:\\Users\\kitety\\AppData\\Roaming\\npm;C:\\Users\\kitety\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\kitety\\go\\bin;C:\\Users\\kitety\\Desktop\\code\\work\\go\\bin;",
+    "PATHEXT": ".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JSE;.WSF;.WSH;.MSC;.CPL",
+    "PROCESSOR_ARCHITECTURE": "AMD64",
+    "PROCESSOR_IDENTIFIER": "Intel64 Family 6 Model 158 Stepping 10, GenuineIntel",
+    "PROCESSOR_LEVEL": "6",
+    "PROCESSOR_REVISION": "9e0a",
+    "ProgramData": "C:\\ProgramData",
+    "ProgramFiles": "C:\\Program Files",
+    "ProgramFiles(x86)": "C:\\Program Files (x86)",
+    "ProgramW6432": "C:\\Program Files",
+    "PROMPT": "$P$G",
+    "PSModulePath": "C:\\Users\\kitety\\Documents\\WindowsPowerShell\\Modules;C:\\Program Files\\WindowsPowerShell\\Modules;C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\Modules",
+    "PUBLIC": "C:\\Users\\Public",
+    "SESSIONNAME": "Console",
+    "SystemDrive": "C:",
+    "SystemRoot": "C:\\WINDOWS",
+    "TEMP": "C:\\Users\\kitety\\AppData\\Local\\Temp",
+    "TERM_PROGRAM": "vscode",
+    "TERM_PROGRAM_VERSION": "1.41.1",
+    "TMP": "C:\\Users\\kitety\\AppData\\Local\\Temp",
+    "USERDOMAIN": "DESKTOP-2LO9G63",
+    "USERDOMAIN_ROAMINGPROFILE": "DESKTOP-2LO9G63",
+    "USERNAME": "kitety",
+    "USERPROFILE": "C:\\Users\\kitety",
+    "WEBPACK_DEV_SERVER": "true",
+    "WebStorm": "C:\\Program Files\\JetBrains\\WebStorm 2019.1\\bin;",
+    "windir": "C:\\WINDOWS",
+    "YARN_WRAP_OUTPUT": "false"
+  },
+  "sharedObjects": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "C:\\WINDOWS\\SYSTEM32\\ntdll.dll",
+    "C:\\WINDOWS\\System32\\KERNEL32.DLL",
+    "C:\\WINDOWS\\System32\\KERNELBASE.dll",
+    "C:\\WINDOWS\\System32\\WS2_32.dll",
+    "C:\\WINDOWS\\System32\\RPCRT4.dll",
+    "C:\\WINDOWS\\System32\\ADVAPI32.dll",
+    "C:\\WINDOWS\\System32\\msvcrt.dll",
+    "C:\\WINDOWS\\System32\\sechost.dll",
+    "C:\\WINDOWS\\System32\\USER32.dll",
+    "C:\\WINDOWS\\SYSTEM32\\dbghelp.dll",
+    "C:\\WINDOWS\\System32\\win32u.dll",
+    "C:\\WINDOWS\\System32\\ucrtbase.dll",
+    "C:\\WINDOWS\\System32\\GDI32.dll",
+    "C:\\WINDOWS\\System32\\gdi32full.dll",
+    "C:\\WINDOWS\\System32\\msvcp_win.dll",
+    "C:\\WINDOWS\\System32\\PSAPI.DLL",
+    "C:\\WINDOWS\\System32\\CRYPT32.dll",
+    "C:\\WINDOWS\\System32\\MSASN1.dll",
+    "C:\\WINDOWS\\System32\\bcrypt.dll",
+    "C:\\WINDOWS\\SYSTEM32\\IPHLPAPI.DLL",
+    "C:\\WINDOWS\\SYSTEM32\\USERENV.dll",
+    "C:\\WINDOWS\\System32\\profapi.dll",
+    "C:\\WINDOWS\\SYSTEM32\\WINMM.dll",
+    "C:\\WINDOWS\\SYSTEM32\\winmmbase.dll",
+    "C:\\WINDOWS\\System32\\cfgmgr32.dll",
+    "C:\\WINDOWS\\System32\\bcryptPrimitives.dll",
+    "C:\\WINDOWS\\System32\\IMM32.DLL",
+    "C:\\WINDOWS\\System32\\powrprof.dll",
+    "C:\\WINDOWS\\System32\\UMPDC.dll",
+    "C:\\WINDOWS\\SYSTEM32\\CRYPTBASE.DLL",
+    "C:\\WINDOWS\\system32\\uxtheme.dll",
+    "C:\\WINDOWS\\System32\\combase.dll",
+    "C:\\WINDOWS\\system32\\mswsock.dll",
+    "C:\\WINDOWS\\System32\\kernel.appcore.dll",
+    "C:\\WINDOWS\\System32\\NSI.dll",
+    "C:\\WINDOWS\\SYSTEM32\\dhcpcsvc6.DLL",
+    "C:\\WINDOWS\\SYSTEM32\\dhcpcsvc.DLL",
+    "C:\\WINDOWS\\SYSTEM32\\DNSAPI.dll",
+    "C:\\WINDOWS\\system32\\napinsp.dll",
+    "C:\\WINDOWS\\system32\\pnrpnsp.dll",
+    "C:\\WINDOWS\\System32\\winrnr.dll",
+    "C:\\WINDOWS\\system32\\NLAapi.dll",
+    "C:\\WINDOWS\\system32\\wshbth.dll"
+  ]
+}
