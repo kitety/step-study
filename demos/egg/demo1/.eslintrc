@@ -1,0 +1,6 @@
+{
+  "extends": "eslint-config-egg",
+  "rules": {
+    "quotes": [0, "single"] //引号类型 `` "" ''
+  }
+}
