@@ -1,12 +1,26 @@
-import Taro, { useState, Config } from "@tarojs/taro";
+import Taro, { useState, useEffect } from "@tarojs/taro";
 import { View, Text } from "@tarojs/components";
+import Child from "./child";
 import "./index.less";
 
 function Index() {
-  const [userName, setUserName] = useState("hello");
+  const [userName, setUserName] = useState<number>(1);
+  const [blogTitle, setBlogTitle] = useState<string>("");
+  useEffect(() => {
+    setBlogTitle(this.$router.params.blogTitle);
+  }, []);
+
   return (
     <View>
-      <Text>{userName}</Text>
+      <Text
+        onClick={() => {
+          setUserName(userName + 1);
+        }}
+      >
+        {userName}
+      </Text>
+      <Child username={String(userName)} />
+      {blogTitle && <Text>{blogTitle}</Text>}
     </View>
   );
 }

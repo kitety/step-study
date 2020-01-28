@@ -1,8 +1,12 @@
-import { View, Text } from "@tarojs/components";
-function Child() {
+import Taro,{ View, Text } from "@tarojs/components";
+
+interface IProps {
+  username: string;
+}
+function Child({ username }: IProps) {
   return (
     <View>
-      <Text>child</Text>
+      <Text>The child {username}</Text>
     </View>
   );
 }

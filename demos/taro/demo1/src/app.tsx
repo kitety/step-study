@@ -28,7 +28,9 @@ class App extends Component {
    */
   config: Config = {
     pages: [
-      'pages/index/index'
+      // 第一个就是默认
+      'pages/blog/index',
+      'pages/index/index',
     ],
     window: {
       backgroundTextStyle: 'light',
