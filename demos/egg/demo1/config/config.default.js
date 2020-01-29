@@ -16,8 +16,20 @@ module.exports = appInfo => {
   config.keys = appInfo.name + "_1580209612562_8914";
 
   // add your middleware config here
-  config.middleware = [];
-
+  config.middleware = ["logTime", "auth"];
+  // config.middleware = ["logTime", "forbidIp"];
+  // 配置公共api地址
+  config.api = "http://www.phonegap100.com/";
+  // 中间件参数
+  config.logTime = {
+    name: {
+      cc: "hello"
+    }
+  };
+  // 设置session
+  config.session = {
+    renew: true
+  };
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',

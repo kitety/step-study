@@ -4,6 +4,8 @@ const Controller = require("egg").Controller;
 
 class NewsController extends Controller {
   async index() {
+    console.log(this.ctx.cookies.get("name", { encrypt: true }));
+    console.log("this.ctx.session.username", this.ctx.session.username);
     // this.ctx.body = "新闻页面";
     let msg = "后台新闻消息";
     // 渲染文件  会自动找文件

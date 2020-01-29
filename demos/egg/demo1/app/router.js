@@ -17,4 +17,8 @@ module.exports = app => {
   router.get("/newscontent", controller.news.content);
   router.get("/newsList/:id", controller.news.newsList);
   router.get("/admin", controller.admin.index);
+  router.get("/spider", controller.spider.index);
+  router.get("/newscontent2", controller.spider.content);
+  router.post("/add", controller.home.add);
+  router.get("/form", controller.home.form);
 };
