@@ -5,6 +5,7 @@
 // selectively enable features needed in the rendering
 // process.
 const fs = require("fs");
+const { dialog } = require("electron").remote;
 
 document.getElementById("button").onclick = function getProcessInfo() {
   console.log(1111, process);
@@ -40,9 +41,38 @@ const loadstop = () => {
       background:red;
     }
   `);
-  webview.executeJavaScript(`document.getElementById('su').value='搜索文字'`)
-  webview.openDevTools()
+  webview.executeJavaScript(`document.getElementById('su').value='搜索文字'`);
+  // webview.openDevTools()
 };
 
 webview.addEventListener("did-start-loading", loadstart);
 webview.addEventListener("did-stop-loading", loadstop);
+
+let subWin = null;
+// 弹出子窗口
+document.getElementById("open-window").onclick = () => {
+  subWin = window.open("page2.html", "page2");
+};
+// 关闭子窗口
+document.getElementById("close-window").onclick = () => {
+  subWin.close();
+};
+
+// 监听消息
+window.addEventListener("message", e => {
+  console.log(e);
+});
+
+// dialog
+document.getElementById("open-dialog").onclick = () => {
+  const path = dialog.showOpenDialogSync({
+    title: "请选择文件",
+    filters: [
+      { name: "Images", extensions: ["jpg", "png", "gif"] },
+      { name: "Movies", extensions: ["mkv", "avi", "mp4"] },
+      { name: "Custom File Type", extensions: ["as"] },
+      { name: "All Files", extensions: ["*"] }
+    ]
+  });
+  console.log(path);
+};
