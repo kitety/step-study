@@ -1,5 +1,12 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, BrowserView } = require("electron");
+const {
+  app,
+  BrowserWindow,
+  BrowserView,
+  globalShortcut,
+  ipcMain,
+  Menu
+} = require("electron");
 const path = require("path");
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -7,6 +14,7 @@ const path = require("path");
 let mainWindow;
 
 function createWindow() {
+  console.log(2222222);
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 800,
@@ -42,8 +50,8 @@ function createWindow() {
   var childWin = new BrowserWindow({
     parent: mainWindow,
     modal: true,
-    x:0,
-    y:0,
+    x: 0,
+    y: 0
   });
   let view = new BrowserView();
   // mainWindow.setBrowserView(view);
@@ -54,7 +62,21 @@ function createWindow() {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on("ready", createWindow);
+app.on("ready", () => {
+  // 创建window
+  createWindow();
+  // 注册一个 'CommandOrControl+X' 的全局快捷键
+  const ret = globalShortcut.register("CommandOrControl+D", () => {
+    console.log("CommandOrControl+D is pressed");
+  });
+
+  if (!ret) {
+    console.log("registration failed");
+  }
+
+  // 检查快捷键是否注册成功
+  console.log(globalShortcut.isRegistered("CommandOrControl+P"));
+});
 
 // Quit when all windows are closed.
 app.on("window-all-closed", function() {
@@ -68,6 +90,36 @@ app.on("activate", function() {
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) createWindow();
 });
+app.on("will-quit", () => {
+  // 注销快捷键
+  globalShortcut.unregister("CommandOrControl+P");
+
+  // 注销所有快捷键
+  globalShortcut.unregisterAll();
+});
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+// 与render进程通信
+ipcMain.on("msg-main", (event, arg) => {
+  console.log("主进程接收到的消息", arg); // prints "ping"
+  event.reply("msg-render", "来自主进程的问候");
+});
+
+setTimeout(() => {
+  mainWindow.webContents.send("msg-render", "主进程主动说的话");
+}, 2000);
+
+// 尝试从主进程渲染菜单
+// setTimeout(() => {
+//   const templates = [
+//     { label: "111" },
+//     { label: "111" },
+//     { label: "111" },
+//     { label: "111" },
+//     { label: "111" },
+//     { label: "111" }
+//   ];
+//   const menu = Menu.buildFromTemplate(templates);
+//   menu.popup();
+// }, 1000);
