@@ -19,9 +19,12 @@ import { TaskStatusValidationPipe } from "./pipes/task-status-calidation.pipe";
 @Controller("tasks")
 export class TasksController {
   constructor(private tasksService: TasksService) {}
-
+  /**
+   *
+   * @Query(ValidationPipe)/@UsePipes(ValidationPipe)都可以
+   */
   @Get()
-  getTasks(@Query() filterDto: GetTaskFilterDto): Task[] {
+  getTasks(@Query(ValidationPipe) filterDto: GetTaskFilterDto): Task[] {
     if (Object.keys(filterDto).length) {
       return this.tasksService.getTasksWithFilters(filterDto);
     } else {
