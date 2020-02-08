@@ -8,13 +8,15 @@ import {
   Patch,
   Query,
   UsePipes,
-  ValidationPipe
+  ValidationPipe,
+  ParseIntPipe
 } from "@nestjs/common";
 import { TasksService } from "./tasks.service";
-import { Task, TaskStatus } from "./task_model";
 import { CreateTaskDto } from "./dto/create-task.dto";
 import { GetTaskFilterDto } from "./dto/get-task-filter.dto";
 import { TaskStatusValidationPipe } from "./pipes/task-status-calidation.pipe";
+import { Task } from "./task.entity";
+import { TaskStatus } from "./task-status.enum";
 
 @Controller("tasks")
 export class TasksController {
@@ -23,39 +25,40 @@ export class TasksController {
    *
    * @Query(ValidationPipe)/@UsePipes(ValidationPipe)都可以
    */
-  @Get()
-  getTasks(@Query(ValidationPipe) filterDto: GetTaskFilterDto): Task[] {
-    if (Object.keys(filterDto).length) {
-      return this.tasksService.getTasksWithFilters(filterDto);
-    } else {
-      return this.tasksService.getAllTasks();
-    }
-  }
+  // @Get()
+  // getTasks(@Query(ValidationPipe) filterDto: GetTaskFilterDto): Task[] {
+  //   if (Object.keys(filterDto).length) {
+  //     return this.tasksService.getTasksWithFilters(filterDto);
+  //   } else {
+  //     return this.tasksService.getAllTasks();
+  //   }
+  // }
 
+  // ParseIntPipe,转换为整型
   @Get("/:id")
-  getTaskById(@Param("id") id: string): Task {
+  getTaskById(@Param("id", ParseIntPipe) id: number): Promise<Task> {
     return this.tasksService.getTaskById(id);
   }
 
-  @Delete("/:id")
-  deleteTaskById(@Param("id") id: string): Task {
-    return this.tasksService.deleteTaskById(id);
-  }
+  // @Delete("/:id")
+  // deleteTaskById(@Param("id") id: string): Task {
+  //   return this.tasksService.deleteTaskById(id);
+  // }
 
   @Post()
   @UsePipes(ValidationPipe)
-  createTask(@Body() createTaskDto: CreateTaskDto) {
+  createTask(@Body() createTaskDto: CreateTaskDto): Promise<Task> {
     return this.tasksService.createTask(createTaskDto);
   }
   // createTask(@Body() body: { title; description }) {
   // const { title, description } = body;
   // }
 
-  @Patch("/:id/:status")
-  updateTask(
-    @Param("id") id: string,
-    @Param("status", TaskStatusValidationPipe) status: TaskStatus
-  ) {
-    return this.tasksService.updateTaskById(id, status);
-  }
+  // @Patch("/:id/:status")
+  // updateTask(
+  //   @Param("id") id: string,
+  //   @Param("status", TaskStatusValidationPipe) status: TaskStatus
+  // ) {
+  //   return this.tasksService.updateTaskById(id, status);
+  // }
 }
