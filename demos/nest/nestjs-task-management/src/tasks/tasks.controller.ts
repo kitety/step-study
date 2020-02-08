@@ -40,25 +40,22 @@ export class TasksController {
     return this.tasksService.getTaskById(id);
   }
 
-  // @Delete("/:id")
-  // deleteTaskById(@Param("id") id: string): Task {
-  //   return this.tasksService.deleteTaskById(id);
-  // }
+  @Delete("/:id")
+  deleteTaskById(@Param("id", ParseIntPipe) id: number): { message: string } {
+    this.tasksService.deleteTaskById(id);
+    return { message: "delete success" };
+  }
 
   @Post()
   @UsePipes(ValidationPipe)
   createTask(@Body() createTaskDto: CreateTaskDto): Promise<Task> {
     return this.tasksService.createTask(createTaskDto);
   }
-  // createTask(@Body() body: { title; description }) {
-  // const { title, description } = body;
-  // }
-
-  // @Patch("/:id/:status")
-  // updateTask(
-  //   @Param("id") id: string,
-  //   @Param("status", TaskStatusValidationPipe) status: TaskStatus
-  // ) {
-  //   return this.tasksService.updateTaskById(id, status);
-  // }
+  @Patch("/:id/:status")
+  updateTask(
+    @Param("id", ParseIntPipe) id: number,
+    @Param("status", TaskStatusValidationPipe) status: TaskStatus
+  ): Promise<Task> {
+    return this.tasksService.updateTaskById(id, status);
+  }
 }
