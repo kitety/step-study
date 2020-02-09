@@ -13,8 +13,8 @@ export class UserRepository extends Repository<User> {
     const { username, password } = authCredentialDto;
     const user = new User();
     user.username = username;
-    user.salt = bcrypt.genSaltSync();
-    user.password = this.hashPassword(password, user.salt);
+    const salt = bcrypt.genSaltSync();
+    user.password = this.hashPassword(password, salt);
     try {
       await user.save();
     } catch (error) {
@@ -32,7 +32,7 @@ export class UserRepository extends Repository<User> {
   ): Promise<string> {
     const { username, password } = authCredentialDto;
     const user = await this.findOne({ username });
-    if (user && user.validatePassword(password)) {
+    if (user && (await user.validatePassword(password))) {
       return user.username;
     } else {
       return null;
