@@ -26,6 +26,19 @@ export class UserRepository extends Repository<User> {
       }
     }
   }
+
+  async validateUserPassword(
+    authCredentialDto: AuthCredentialDto
+  ): Promise<string> {
+    const { username, password } = authCredentialDto;
+    const user = await this.findOne({ username });
+    if (user && user.validatePassword(password)) {
+      return user.username;
+    } else {
+      return null;
+    }
+  }
+
   // use ...Sync,so remove async and await
   private hashPassword(password: string, salt: string): string {
     return bcrypt.hashSync(password, salt);
