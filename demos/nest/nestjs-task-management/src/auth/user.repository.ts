@@ -1,26 +1,33 @@
 import { Repository, EntityRepository } from "typeorm";
+import * as bcrypt from "bcryptjs";
 import { User } from "./user.entity";
 import { AuthCredentialDto } from "./dto/auth-credential.dto";
-import { ConflictException, InternalServerErrorException } from "@nestjs/common";
+import {
+  ConflictException,
+  InternalServerErrorException
+} from "@nestjs/common";
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
   async signUp(authCredentialDto: AuthCredentialDto): Promise<void> {
     const { username, password } = authCredentialDto;
-    // find if username is already exist
-    // bad:send a query,just do it in entity
     const user = new User();
     user.username = username;
-    user.password = password;
+    user.salt = bcrypt.genSaltSync();
+    user.password = this.hashPassword(password, user.salt);
     try {
       await user.save();
     } catch (error) {
       if (error.code === "23505") {
         // duplicate username
         throw new ConflictException("username already exists");
-      }else{
-        throw new  InternalServerErrorException()
+      } else {
+        throw new InternalServerErrorException();
       }
     }
+  }
+  // use ...Sync,so remove async and await
+  private hashPassword(password: string, salt: string): string {
+    return bcrypt.hashSync(password, salt);
   }
 }
