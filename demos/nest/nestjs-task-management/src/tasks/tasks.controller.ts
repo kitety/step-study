@@ -32,9 +32,10 @@ export class TasksController {
    */
   @Get()
   getTasks(
-    @Query(ValidationPipe) filterDto: GetTaskFilterDto
+    @Query(ValidationPipe) filterDto: GetTaskFilterDto,
+    @GetUser() user: User
   ): Promise<Task[]> {
-    return this.tasksService.getTasks(filterDto);
+    return this.tasksService.getTasks(filterDto,user);
   }
 
   // ParseIntPipe,转换为整型
@@ -51,9 +52,11 @@ export class TasksController {
 
   @Post()
   @UsePipes(ValidationPipe)
-  createTask(@Body() createTaskDto: CreateTaskDto,
-  @GetUser() user:User): Promise<Task> {
-    return this.tasksService.createTask(createTaskDto,user);
+  createTask(
+    @Body() createTaskDto: CreateTaskDto,
+    @GetUser() user: User
+  ): Promise<Task> {
+    return this.tasksService.createTask(createTaskDto, user);
   }
   @Patch("/:id/:status")
   updateTask(
