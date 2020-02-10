@@ -35,13 +35,16 @@ export class TasksController {
     @Query(ValidationPipe) filterDto: GetTaskFilterDto,
     @GetUser() user: User
   ): Promise<Task[]> {
-    return this.tasksService.getTasks(filterDto,user);
+    return this.tasksService.getTasks(filterDto, user);
   }
 
   // ParseIntPipe,转换为整型
   @Get("/:id")
-  getTaskById(@Param("id", ParseIntPipe) id: number): Promise<Task> {
-    return this.tasksService.getTaskById(id);
+  getTaskById(
+    @Param("id", ParseIntPipe) id: number,
+    @GetUser() user: User
+  ): Promise<Task> {
+    return this.tasksService.getTaskById(id, user);
   }
 
   @Delete("/:id")
@@ -61,8 +64,9 @@ export class TasksController {
   @Patch("/:id/:status")
   updateTask(
     @Param("id", ParseIntPipe) id: number,
-    @Param("status", TaskStatusValidationPipe) status: TaskStatus
+    @Param("status", TaskStatusValidationPipe) status: TaskStatus,
+    @GetUser() user: User
   ): Promise<Task> {
-    return this.tasksService.updateTaskById(id, status);
+    return this.tasksService.updateTaskById(id, status, user);
   }
 }
