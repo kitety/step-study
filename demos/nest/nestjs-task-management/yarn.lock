@@ -1801,6 +1801,13 @@ concat-stream@^1.5.0, concat-stream@^1.5.2:
     readable-stream "^2.2.2"
     typedarray "^0.0.6"
 
+config@^3.2.5:
+  version "3.2.5"
+  resolved "https://registry.npm.taobao.org/config/download/config-3.2.5.tgz#ab10ab88b61a873fbf9a5f0c6b4a22750422f243"
+  integrity sha1-qxCriLYahz+/ml8Ma0oidQQi8kM=
+  dependencies:
+    json5 "^1.0.1"
+
 consola@^2.3.0:
   version "2.11.3"
   resolved "https://registry.npm.taobao.org/consola/download/consola-2.11.3.tgz#f7315836224c143ac5094b47fd4c816c2cd1560e"
