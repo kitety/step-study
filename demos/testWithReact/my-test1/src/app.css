@@ -1,0 +1,15 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: #707174;
+  font-size: 18px;
+  line-height: 22px;
+  color: #121212;
+  font-family: "Open Sans", sans-serif;
+}
+.main {
+  width: 100%;
+  padding: 0 10px;
+  max-width: 980px;
+  margin: 20px auto 80px;
+}

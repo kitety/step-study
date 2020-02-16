@@ -1,0 +1,15 @@
+header {
+  background: #121212;
+}
+header .wrap {
+  margin: 0 auto;
+  max-width: 980px;
+}
+header .logo {
+  width: 120px;
+  display: flex;
+  align-items: center;
+}
+header img {
+  width: 120px;
+}
