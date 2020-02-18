@@ -11,7 +11,8 @@ const tempArr = [
     onlineStatus: false
   }
 ];
-function App() {
+function App(props) {
+  console.log(props)
   return (
     <div className="App">
       <Header />
