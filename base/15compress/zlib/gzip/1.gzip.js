@@ -1,5 +1,4 @@
 let zlib = require("zlib");
-let fs = require("fs");
 let path = require("path");
 
 function zip(src) {
