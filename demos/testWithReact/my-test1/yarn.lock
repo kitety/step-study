@@ -8612,7 +8612,7 @@ react-redux@^7.1.3:
     prop-types "^15.7.2"
     react-is "^16.9.0"
 
-react-scripts@3.4.0:
+react-scripts@^3.4.0:
   version "3.4.0"
   resolved "https://registry.npm.taobao.org/react-scripts/download/react-scripts-3.4.0.tgz#f413680f0b5b937c8879ba1ffdae9b8c5b364bf5"
   integrity sha1-9BNoDwtbk3yIebof/a6bjFs2S/U=
