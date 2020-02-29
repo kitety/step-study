@@ -1,4 +1,5 @@
 {
   "commentTranslate.targetLanguage": "en",
-  "debug.node.autoAttach": "on"
+  "debug.node.autoAttach": "on",
+  "vsicons.presets.angular": true
 }
