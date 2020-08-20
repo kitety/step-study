@@ -11,7 +11,7 @@
 /* 冒泡 n-1
 让数组中的当前项和后一项进行比较，如果当前项比后一项大，则交换
 */
-let arr = [12, 8, 24, 16, 1,400,-56];
+let arr = [12, 8, 24, 16, 1, 400, -56];
 /**
  *
  * @param {*} arr
@@ -78,4 +78,20 @@ function quick(arr = []) {
   // 递归 左右两边 一直到排好序
   return quick(arrLeft).concat(middleVal, quick(arrRight));
 }
-console.log(quick(arr));
+// console.log(quick(arr));
+
+// 选择排序
+// https://www.bilibili.com/video/BV1V741127GL?from=search&seid=11760851855042577062
+function select(arr = []) {
+  for (let i = 0; i < arr.length; i++) {
+    let minIndex = i;
+    for (let j = i + 1; j < arr.length; j++) {
+      if (arr[j] < arr[minIndex]) {
+        minIndex = j;
+      }
+    }
+    [arr[i], arr[minIndex]] = [arr[minIndex], arr[i]];
+  }
+  return arr;
+}
+console.log(select(arr));
