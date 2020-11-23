@@ -29,7 +29,7 @@ let obj = {
   1: 2,
   length: 2,
   //  可迭代的方法  对象 有个next方法  每次调用 返回 value done 属性
-  *[Symbol.iterator] () {
+  *[Symbol.iterator]() {
     // 用生成器生成迭代器
 
     for (let index = 0; index < this.length; index++) {
@@ -64,14 +64,12 @@ let obj = {
 // console.log(c.next(1)); // 打印 undefined yield 'cccc'
 // console.log(c.next(2)); // 打印 undefined  // 全部流程结束
 
-
-let fs = require('fs').promises//可以直接将fs中的方法变为promise node10+
-function* read () {
+let fs = require("fs").promises; //可以直接将fs中的方法变为promise node10+
+function* read() {
   try {
-    
-    let content = yield fs.readFile('./name.txt', 'utf8')
-    let r = yield fs.readFile(content, 'utf8')
-    return r
+    let content = yield fs.readFile("./name.txt", "utf8");
+    let r = yield fs.readFile(content, "utf8");
+    return r;
   } catch (error) {
     console.log(error);
   }
@@ -89,22 +87,65 @@ function* read () {
 // })
 
 // 将迭代器的结果执行完
-function co (it) {
+function co(it) {
   return new Promise((resolve, reject) => {
     // 递归
-    function next (data) {
-      let { value, done } = it.next(data)
+    function next(data) {
+      let { value, done } = it.next(data);
       // value是个promise
       if (!done) {
-        Promise.resolve(value).then(d => {
-          next(d)
-        }, reject)
+        Promise.resolve(value).then(
+          (d) => {
+            next(d);
+          },
+          (err) => {
+            // it.throw(err);// 可以捕获generator中得异常
+            reject(err);
+          }
+        );
       } else {
-        resolve(data)
+        resolve(data);
       }
     }
-    next()
-  })
+    next();
+  });
 }
 
-co(read()).then(d => { console.log(d); }, console.log)
+co(read()).then((d) => {
+  console.log(d);
+}, console.log);
+
+// 基于generator+co
+async function read() {
+  try {
+    let content = await fs.readFile("./name.txt", "utf8");
+    let r = await fs.readFile(content, "utf8");
+    return r;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+// 回调 高阶函数 aop promise 发布订阅 generator co async await
+
+let fs = require("fs");
+
+function promises(fn) {
+  return function (...args) {
+    return new Promise((resolve, reject) => {
+      fn(...args, (err, data) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(data);
+        }
+      });
+    });
+  };
+}
+// 返回一个函数
+let readFile1 = promises(fs.readFile);
+// 返回一个promise
+readFile1("./name.txt", "utf8").then((d) => {
+  console.log(d);
+});
