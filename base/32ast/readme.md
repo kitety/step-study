@@ -1,0 +1,5 @@
+- esprima 源代码转换为AST
+- estraverse 遍历语法树，进行操作
+- escodegen 转换后的AST生成code
+- babel/core babel核心库 实现核心转换引擎
+- babel/types 类型判断 生成ast 零部件
