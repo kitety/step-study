@@ -17,10 +17,19 @@ let visitor = {
     const isImportNamespaceSpecifier = types.isImportNamespaceSpecifier(
       specifiers[0]
     );
-    if (!isImportDefaultSpecifier || !isImportNamespaceSpecifier) {
-     let newImportSpecifiers = specifiers.map(specifier=>{
-       
-     });
+    if (!(isImportDefaultSpecifier && isImportNamespaceSpecifier)) {
+      let newImportSpecifiers = specifiers.map((specifier) => {
+        return types.ImportDeclaration(
+          [types.ImportDefaultSpecifier(specifier.local)],
+          types.StringLiteral(`${node.source.value}/${specifier.local.name}`)
+        );
+      });
+      path.replaceWithMultiple(newImportSpecifiers);
     }
   },
 };
+let result = babel.transform("import { flatten } from 'lodash' ", {
+  plugins: [{ visitor }],
+});
+// 拼凑
+console.log(result.code);
