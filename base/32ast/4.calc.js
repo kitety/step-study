@@ -3,7 +3,7 @@ let types = require("@babel/types"); // 类型判断 生成ast节点
 
 // let a = 2 * 3;
 // 运算符 从右往前算
-const code = "let a = 2 * 3+6+6+6+6+6+6;";
+const code = "let a = 2 * 3+6+6+6+6+6+6/8;";
 let visitor = {
   // 就是靠这个变量名匹配 一样就匹配上了
   BinaryExpression(path) {

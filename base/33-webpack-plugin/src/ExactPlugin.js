@@ -4,6 +4,7 @@
 let babel = require("@babel/core");
 let types = require("@babel/types");
 
+console.log(1);
 // 只处理 ImportDeclaration
 let visitor = {
   ImportDeclaration(path) {
@@ -13,15 +14,11 @@ let visitor = {
     const isImportDefaultSpecifier = types.isImportDefaultSpecifier(
       specifiers[0]
     );
-    // import * as UI from 'xxx-ui'; 这种
-    const isImportNamespaceSpecifier = types.isImportNamespaceSpecifier(
-      specifiers[0]
-    );
-    if (!(isImportDefaultSpecifier && isImportNamespaceSpecifier)) {
+    if (!isImportDefaultSpecifier && node.source.value === "lodash") {
       let newImportSpecifiers = specifiers.map((specifier) => {
-        return types.ImportDeclaration(
-          [types.ImportDefaultSpecifier(specifier.local)],
-          types.StringLiteral(`${node.source.value}/${specifier.local.name}`)
+        return types.importDeclaration(
+          [types.importDefaultSpecifier(specifier.local)],
+          types.stringLiteral(`${node.source.value}/${specifier.local.name}`)
         );
       });
       path.replaceWithMultiple(newImportSpecifiers);
