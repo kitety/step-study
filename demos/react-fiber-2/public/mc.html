@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let channel = new MessageChannel();
+    let port1 = channel.port1
+    let port2 = channel.port2
+    port1.onmessage = (e) => {
+      console.log(e)
+      console.log('port1收到port2的数据', e.data);
+    }
+    port2.onmessage = (e) => {
+      console.log('port2收到port1的数据', e.data);
+    }
+    port1.postMessage('2 hello')
+    port2.postMessage('1 hello')
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function sleep(duration) {
+      let start = Date.now();
+      while (start + duration > Date.now()) { }
+    }
+    let activeFrameTime = 1000 / 60  //16.66 刷新时间
+    let frameDeadline//这一帧的截止时间
+    let pendingCallback// 等待执行的回调
+    let channel = new MessageChannel()
+    let timeRemaining = () => frameDeadline - performance.now()
+    // 空闲的时候会执行宏任务
+    channel.port2.onmessage = (e) => {
+      console.log(e)
+      const timeout = e.data.timeout
+      let currentTime = performance.now()
+      // 帧的截止时间 小于当前时间 那么就是已经到期了
+      // 加上timeout时间都还没执行 那就是真的超时了
+      let didTimeout = timeout && (frameDeadline + timeout <= currentTime)
+      if (didTimeout || timeRemaining() > 0) {
+        if (pendingCallback) pendingCallback({ timeRemaining, didTimeout })
+      }
+    }
+    window.requestIdleCallback = function (callback, options = {}) {
+      requestAnimationFrame((refTime) => {
+        // 每帧开始的时间
+        console.log('refTime', refTime);
+        // 开始的时间加上刷新率对应的时间 就是截止时间
+        frameDeadline = activeFrameTime + refTime
+        pendingCallback = callback
+        // 发消息后 会添加宏任务
+        channel.port1.postMessage(options)
+      })
+    }
+    const works = [
+      () => {
+        console.log("第1个任务开始");
+        sleep(0);//sleep(20);
+        console.log("第1个任务结束");
+        // 目前 requestIdleCallback 目前只有Chrome支持
+        // 所以目前 React利用 MessageChannel模拟了requestIdleCallback，将回调延迟到绘制操
+        // 作之后执行
+        // MessageChannel API允许我们创建一个新的消息通道，并通过它的两个MessagePort属
+        // 性发送数据
+        // MessageChannel创建了一个通信的管道，这个管道有两个端口，每个端口都可以通过
+        // postMessage发送数据，而一个端口只要绑定了onmessage回调方法，就可以接收从另
+        // 一个端口传过来的数据
+        // MessageChannel是一个宏任务
+        // co so e.og(第 个任务结束);
+      },
+      () => {
+        console.log("第2个任务开始");
+        sleep(0);//sleep(20);
+        console.log("第2个任务结束");
+      },
+      () => {
+        console.log("第3个任务开始");
+        sleep(0);//sleep(20);
+        console.log("第3个任务结束");
+      },
+    ];
+    // 过期时间
+    requestIdleCallback(workLoop);
+    function workLoop(deadline) {
+      console.log('本帧剩余时间', parseInt(deadline.timeRemaining()));
+      // 有剩余时间或者时间已经过期了
+      while ((deadline.timeRemaining() > 1 || deadline.didTimeout) && works.length > 0)
+        performUnitOfWork();
+      if (works.length > 0) {
+        console.log(`只剩下${parseInt(deadline.timeRemaining())}ms,时间片`)
+        requestIdleCallback(workLoop);
+      }
+    }
+    function performUnitOfWork() {
+      works.shift()();
+    }
+  </script>
+</body>
+
+</html>
