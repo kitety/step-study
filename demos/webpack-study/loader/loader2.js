@@ -8,4 +8,5 @@ loader.pitch = () => {
   console.log("2 pitch");
   return '234'
 };
+
 module.exports = loader;

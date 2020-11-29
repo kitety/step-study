@@ -1,6 +1,6 @@
 const path = require("path");
 class P {
-  apply(compiler) {
+  apply (compiler) {
     compiler.hooks.done.tap("Hello World Plugin", (
       stats /* 在 hook 被触及时，会将 stats 作为参数传入。 */
     ) => {
@@ -22,6 +22,7 @@ module.exports = {
     //   loader1:path.resolve(__dirname, "loader", "loader1")
     // }
   },
+  watch: true,
   module: {
     rules: [
       {
@@ -33,12 +34,36 @@ module.exports = {
         ],
       },
       {
+        test: /\.jpg$/,
+        // 根据图片生成md5 发射到dist目录下 还会返回图片路径
+        // use: 'file-loader'
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 200 * 1024//200k
+          }
+        }
+        // url-loader会处理路径 file-loader 发射出来
+      },
+      {
         test: /\.js$/,
-        use:
+        use: {
+          loader: 'banner-loader',
+          options: {
+            text: 'kitety',
+            filename: path.resolve(__dirname, "banner.js")
+          }
+        }
+        // use: {
+        //   loader: 'babel-loader',
+        //   options: {
+        //     presets: ["@babel/preset-env"]
+        //   }
+        // }
         //  {
         //   loader: "loader1",
         // },
-         ["loader1", "loader2"],
+        //  ["loader1", "loader2"],
         // [
         //   两个路径
         //   path.resolve(__dirname, "loader", "loader1"),
@@ -48,4 +73,5 @@ module.exports = {
     ],
   },
   plugins: [new P()],
+  devtool: 'source-map'
 };
