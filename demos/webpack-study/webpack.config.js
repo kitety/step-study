@@ -30,6 +30,7 @@ module.exports = {
         use: [
           // 两个路径
           path.resolve(__dirname, "loader", "style-loader"),
+          path.resolve(__dirname, "loader", "css-loader"),
           path.resolve(__dirname, "loader", "less-loader"),
         ],
       },

@@ -1,6 +1,7 @@
 import p from './img/06.jpg'
 // let str = require("./a.js");
 // console.log('str: ', str);
+import './index.less'
 console.log(1)
 /******
  * -! 不会让文件再去通过pre + normal loader
