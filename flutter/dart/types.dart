@@ -25,8 +25,8 @@ void main() {
   }
   /* List 数组 集合 */
   var l1 = [1, 2, 3];
-  List l2 = [2, 3, 5];
-  var l3 = new List();
+  List<int> l2 = [2, 3, 5];
+  var l3 = <dynamic>[];
   l1.insert(0, 555);
   l1.add(8);
   print(l1[1]);
